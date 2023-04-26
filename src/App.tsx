@@ -1,15 +1,9 @@
-import React from 'react';
-import './App.css';
+import React, { FC } from 'react';
+import './App.style.scss';
+import PublicRoutes from './routes/publicRoutes';
 
-function App() {
-  return (
-    <>
-      <div>
-        <h1>Start
-        </h1>
-      </div>
-    </>
-  );
-}
+const App: FC = () => {
+  return <PublicRoutes />;
+};
 
 export default App;
