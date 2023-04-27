@@ -1,11 +1,13 @@
 footer{
-  background-color: rgb(192,192,192);
+  background-color: rgb(255, 182, 40);
   height: 30px;
-  & .content {
+  .content {
     height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: black;
+    font-weight: 700;
   }
 }

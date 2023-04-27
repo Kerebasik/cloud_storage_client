@@ -1,18 +1,21 @@
 import React, { FC, useState } from 'react';
-import 'src/pages/SignUpPage/SignUp.style.scss';
 import axiosApiInstance from 'src/http/axios';
 import { useNavigate } from 'react-router-dom';
 
-const SignUp: FC = () => {
+import 'src/pages/LogInPage/LogIn.style.scss';
+import { AxiosResponse } from 'axios';
+import { ITokens } from 'src/models/ITokens';
+
+const LogIn: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handlerOnSubmit = (e: React.SyntheticEvent) => {
+  const handlerOnSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    axiosApiInstance
+    await axiosApiInstance
       .post(
-        '/auth/registration',
+        '/auth/login',
         JSON.stringify({
           email,
           password,
@@ -23,11 +26,11 @@ const SignUp: FC = () => {
           },
         },
       )
-      .then(() => {
+      .then((response: AxiosResponse<ITokens>) => {
+        localStorage.setItem('token', response.data.accessToken);
+        setEmail('');
+        setPassword('');
         navigate(-1);
-      })
-      .catch(() => {
-        console.log('error axios');
       });
   };
 
@@ -42,16 +45,16 @@ const SignUp: FC = () => {
   return (
     <>
       <div className="container">
-        <div className="signup_content">
+        <div className="login_content">
           <form onSubmit={handlerOnSubmit}>
-            <label className="form_title">Registration</label>
+            <label className="form_title">Log In</label>
             <div className="input_email">
               <label>Enter your email</label>
-              <input className="input" type="email" placeholder="email" onChange={handlerOnChangeEmail} />
+              <input className="input" type="email" placeholder="email" value={email} onChange={handlerOnChangeEmail} />
             </div>
             <div className="input_password">
               <label>Enter password</label>
-              <input type="password" className="input" onChange={handlerOnChangePassword} placeholder="password" />
+              <input type="password" className="input" value={password} onChange={handlerOnChangePassword} placeholder="password" />
             </div>
 
             <button type="submit" onSubmit={handlerOnSubmit}>
@@ -64,4 +67,4 @@ const SignUp: FC = () => {
   );
 };
 
-export default SignUp;
+export default LogIn;

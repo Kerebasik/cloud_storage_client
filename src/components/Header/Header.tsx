@@ -1,9 +1,58 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
-import './Header.style.scss';
+import 'src/components/Header/Header.style.scss';
+import { useAppSelector } from 'src/hooks/redux';
+
+interface NavLinksProps{
+  path:string,
+  style:string,
+  name:string,
+}
+
+const links:Array<NavLinksProps> = [
+  {
+    path:"/",
+    style:"link",
+    name:"Home"
+  },
+  {
+    path:"/about",
+    style:"link",
+    name:"About us"
+  },
+  {
+    path:"/subscriptions",
+    style:"link",
+    name:"Subscriptions"
+  }
+]
+
+const authLinks:Array<NavLinksProps> = [
+  {
+    path:"/login",
+    style:"link_login",
+    name:"Log in"
+  },
+  {
+    path:"/signup",
+    style:"link_signup",
+    name:"Sign up"
+  }
+]
+
+
+const NavLinks:FC<NavLinksProps> =({path, style,name}:NavLinksProps)=>{
+  return(
+    <>
+      <Link to={path} className={style}>
+        {name}
+      </Link>
+    </>
+  )
+}
 
 const Header: FC = () => {
-  const userIsAuth = localStorage.getItem('token') || false;
+  const { user } = useAppSelector((state) => state.userReducer);
 
   return (
     <>
@@ -15,32 +64,26 @@ const Header: FC = () => {
             </div>
 
             <nav className={'navbar'}>
-              <Link to="/" className="link">
-                Home
-              </Link>
-              <Link to="/about" className="link">
-                About us
-              </Link>
-              <Link to="/about" className="link">
-                About
-              </Link>
+              {
+                links.map((item)=>{
+                  return<NavLinks key={item.name} path={item.path} style={item.style} name={item.name} />
+                })
+              }
             </nav>
 
             <div className={'authorization'}>
-              {!!userIsAuth ? (
+              {!user ? (
                 <>
-                  <Link to="/login" className="link">
-                    Log in
-                  </Link>
-
-                  <Link to="/signup" className="link">
-                    Sign up
-                  </Link>
+                  {
+                    authLinks.map((item)=>{
+                      return <NavLinks key={item.name} name={item.name} style={item.style} path={item.path} />
+                    })
+                  }
                 </>
               ) : (
                 <>
-                  <div className="avatar">
-                    <img src="" alt= "user avatar"/>
+                  <div>
+                    <Link to={'/'}><img className="avatar" src={require('src/assets/149452.png')} alt="user avatar" /></Link>
                   </div>
                 </>
               )}
