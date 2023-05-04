@@ -11,7 +11,9 @@ const axiosApiInstance = axios.create({
 axiosApiInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     if (localStorage.getItem('token')) {
-      config.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+      config.headers['Authorization'] = `Bearer ${localStorage.getItem(
+        'token',
+      )}`;
     }
     return config;
   },
@@ -31,14 +33,21 @@ axiosApiInstance.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-    if (error.response.status === 401 && error.config && !error.config._isRetry) {
+    if (
+      error.response.status === 401 &&
+      error.config &&
+      !error.config._isRetry
+    ) {
       originalRequest._isRetry = true;
       try {
-        const response: AxiosResponse = await axios.get<AxiosResponse<Tokens>>('/auth/refresh', { withCredentials: true });
+        const response: AxiosResponse = await axios.get<AxiosResponse<Tokens>>(
+          '/auth/refresh',
+          { withCredentials: true },
+        );
         localStorage.setItem('token', response.data.accessToken);
         return axiosApiInstance.request(originalRequest);
       } catch (e) {
-        console.log(error.response.message)
+        console.log(error.response.message);
       }
     }
 

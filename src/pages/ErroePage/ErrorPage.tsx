@@ -6,7 +6,10 @@ interface ErrorPageProps {
   description?: string;
 }
 
-const ErrorPage: FC<ErrorPageProps> = ({ code = 404, description = 'Not found' }: ErrorPageProps) => {
+const ErrorPage: FC<ErrorPageProps> = ({
+  code = 404,
+  description = 'Not found',
+}: ErrorPageProps) => {
   return (
     <>
       <div className="error_page__content">

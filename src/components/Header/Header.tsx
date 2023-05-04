@@ -2,54 +2,48 @@ import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import 'src/components/Header/Header.style.scss';
 import { useAppSelector } from 'src/hooks/redux';
+import { NavLinksProps } from 'src/interfaces/componentsProps';
 
-interface NavLinksProps{
-  path:string,
-  style:string,
-  name:string,
-}
-
-const links:Array<NavLinksProps> = [
+const links: Array<NavLinksProps> = [
   {
-    path:"/",
-    style:"link",
-    name:"Home"
+    path: '/',
+    style: 'link',
+    name: 'Home',
   },
   {
-    path:"/about",
-    style:"link",
-    name:"About us"
+    path: '/about',
+    style: 'link',
+    name: 'About us',
   },
   {
-    path:"/subscriptions",
-    style:"link",
-    name:"Subscriptions"
-  }
-]
+    path: '/subscriptions',
+    style: 'link',
+    name: 'Subscriptions',
+  },
+];
 
-const authLinks:Array<NavLinksProps> = [
+const authLinks: Array<NavLinksProps> = [
   {
-    path:"/login",
-    style:"link_login",
-    name:"Log in"
+    path: '/login',
+    style: 'link_login',
+    name: 'Log in',
   },
   {
-    path:"/signup",
-    style:"link_signup",
-    name:"Sign up"
-  }
-]
+    path: '/signup',
+    style: 'link_signup',
+    name: 'Sign up',
+  },
+];
 
-
-const NavLinks:FC<NavLinksProps> =({path, style,name}:NavLinksProps)=>{
-  return(
+const NavLinks: FC<NavLinksProps> = ({ path, style, name }: NavLinksProps) => {
+  return (
     <>
       <Link to={path} className={style}>
         {name}
       </Link>
     </>
-  )
-}
+  );
+};
 
 const Header: FC = () => {
   const { user } = useAppSelector((state) => state.userReducer);
@@ -64,26 +58,42 @@ const Header: FC = () => {
             </div>
 
             <nav className={'navbar'}>
-              {
-                links.map((item)=>{
-                  return<NavLinks key={item.name} path={item.path} style={item.style} name={item.name} />
-                })
-              }
+              {links.map((item) => {
+                return (
+                  <NavLinks
+                    key={item.name}
+                    path={item.path}
+                    style={item.style}
+                    name={item.name}
+                  />
+                );
+              })}
             </nav>
 
             <div className={'authorization'}>
               {!user ? (
                 <>
-                  {
-                    authLinks.map((item)=>{
-                      return <NavLinks key={item.name} name={item.name} style={item.style} path={item.path} />
-                    })
-                  }
+                  {authLinks.map((item) => {
+                    return (
+                      <NavLinks
+                        key={item.name}
+                        name={item.name}
+                        style={item.style}
+                        path={item.path}
+                      />
+                    );
+                  })}
                 </>
               ) : (
                 <>
                   <div>
-                    <Link to={'/'}><img className="avatar" src={require('src/assets/149452.png')} alt="user avatar" /></Link>
+                    <Link to={'/'}>
+                      <img
+                        className="avatar"
+                        src={require('src/assets/149452.png')}
+                        alt="user avatar"
+                      />
+                    </Link>
                   </div>
                 </>
               )}
