@@ -3,3 +3,8 @@ export interface NavLinksProps {
   style: string;
   name: string;
 }
+
+export interface IFormSignUpInput {
+  email: string;
+  password: string;
+}

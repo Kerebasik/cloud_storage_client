@@ -47,7 +47,6 @@ const NavLinks: FC<NavLinksProps> = ({ path, style, name }: NavLinksProps) => {
 
 const Header: FC = () => {
   const { user } = useAppSelector((state) => state.userReducer);
-
   return (
     <>
       <header>

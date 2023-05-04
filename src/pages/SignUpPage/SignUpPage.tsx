@@ -1,18 +1,19 @@
 import React, { FC, Suspense } from 'react';
-import SignUp from '../../components/SignUp/SignUp';
-import Preloader from '../../components/Preloader/Preloader';
+import Preloader from 'src/components/Preloader/Preloader';
 
-const SignUpPage:FC = ()=>{
-  return(
+const SignUp = React.lazy(() => import('src/components/SignUp/SignUp'));
+
+const SignUpPage: FC = () => {
+  return (
     <>
       <head>
         <title>SignUp - {process.env.REACT_APP_NAME}</title>
       </head>
-      <Suspense fallback={<Preloader/>}>
-        <SignUp/>
+      <Suspense fallback={<Preloader />}>
+        <SignUp />
       </Suspense>
     </>
-  )
-}
+  );
+};
 
-export default SignUpPage
+export default SignUpPage;

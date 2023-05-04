@@ -1,15 +1,15 @@
 import React, { FC, Suspense } from 'react';
 import Preloader from 'src/components/Preloader/Preloader';
-const Error = React.lazy(() => import('src/components/Error/Error'));
+const About = React.lazy(() => import('src/components/About/About'));
 
-const ErrorPage: FC = () => {
+const AboutPage: FC = () => {
   return (
     <>
       <Suspense fallback={<Preloader />}>
-        <Error />
+        <About />
       </Suspense>
     </>
   );
 };
 
-export default ErrorPage;
+export default AboutPage;
