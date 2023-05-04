@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import 'src/pages/SignUpPage/SignUp.style.scss';
+import 'src/components/SignUp/SignUp.style.scss';
 import axiosApiInstance from 'src/http/axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -41,22 +41,33 @@ const SignUp: FC = () => {
 
   return (
     <>
-      <div className="container">
-        <div className="signup_content">
+      <div className="signup__container">
+        <div className="signup__content">
           <form onSubmit={handlerOnSubmit}>
-            <label className="form_title">Registration</label>
-            <div className="input_email">
+            <label className="form__title">Registration</label>
+            <div className="input__email">
               <label>Enter your email</label>
-              <input className="input" type="email" placeholder="email" onChange={handlerOnChangeEmail} />
+              <input
+                className="input"
+                type="email"
+                placeholder="email"
+                onChange={handlerOnChangeEmail}
+              />
             </div>
-            <div className="input_password">
+            <div className="input__password">
               <label>Enter password</label>
-              <input type="password" className="input" onChange={handlerOnChangePassword} placeholder="password" />
+              <input
+                type="password"
+                className="input"
+                onChange={handlerOnChangePassword}
+                placeholder="password"
+              />
             </div>
-
-            <button type="submit" onSubmit={handlerOnSubmit}>
-              Send
-            </button>
+            <div className={'input__button'}>
+              <button type="submit" onSubmit={handlerOnSubmit}>
+                Send
+              </button>
+            </div>
           </form>
         </div>
       </div>

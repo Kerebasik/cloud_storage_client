@@ -90,7 +90,7 @@ const Header: FC = () => {
                     <Link to={'/'}>
                       <img
                         className="avatar"
-                        src={require('src/assets/149452.png')}
+                        src={require('src/assets/userIcon.png')}
                         alt="user avatar"
                       />
                     </Link>

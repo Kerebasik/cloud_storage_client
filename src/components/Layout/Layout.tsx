@@ -2,11 +2,11 @@ import React, { FC, useEffect } from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Content from '../Content/Content';
-import { userSlice } from '../../store/reducers/userSlice';
-import { useAppDispatch } from '../../hooks/redux';
-import axiosApiInstance from '../../http/axios';
+import { userSlice } from 'src/store/reducers/userSlice';
+import { useAppDispatch } from 'src/hooks/redux';
+import axiosApiInstance from 'src/http/axios';
 import { AxiosResponse } from 'axios';
-import { IUser } from '../../models/IUser';
+import { IUser } from 'src/models/IUser';
 import './Layout.style.scss';
 
 const Layout: FC = () => {
