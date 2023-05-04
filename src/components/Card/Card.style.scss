@@ -1,0 +1,41 @@
+%subtitle {
+  margin: 8px;
+  font-size: 28px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1 1 33%;
+  margin: 2em;
+  padding: 2em;
+  color: white;
+  border: 1px solid black;
+  background-color: rgb(40, 40, 40);
+  border-radius: 1em;
+  &__title {
+    font-size: 48px;
+    font-weight: 700;
+    margin: 5px 0;
+  }
+
+  &__storage {
+    @extend %subtitle;
+  }
+
+  &__price {
+    @extend %subtitle;
+    font-weight: 700;
+  }
+
+  &__button {
+    padding: 10px;
+    @extend %subtitle;
+    border-radius: 5px;
+    border: 1px solid black;
+    font-weight: 700;
+    background-color: rgb(255, 182, 40);
+  }
+}

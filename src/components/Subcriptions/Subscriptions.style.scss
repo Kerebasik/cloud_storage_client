@@ -1,0 +1,10 @@
+.cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex: 1 0 33%;
+  @media (max-width: 1024px) {
+    flex-direction: column;
+  }
+}
