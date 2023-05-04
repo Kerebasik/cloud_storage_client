@@ -8,3 +8,8 @@ export interface IFormSignUpInput {
   email: string;
   password: string;
 }
+
+export interface IFormLogInInput{
+  email: string;
+  password: string;
+}
