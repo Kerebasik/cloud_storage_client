@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import 'src/components/Header/Header.style.scss';
-import { useAppSelector } from 'src/hooks/redux';
 import { NavLinksProps } from 'src/interfaces/componentsProps';
+import { useAuth } from '../../hooks/useAuth';
 
 const links: Array<NavLinksProps> = [
   {
@@ -46,7 +46,7 @@ const NavLinks: FC<NavLinksProps> = ({ path, style, name }: NavLinksProps) => {
 };
 
 const Header: FC = () => {
-  const { user } = useAppSelector((state) => state.userReducer);
+  const { auth } = useAuth();
   return (
     <>
       <header>
@@ -70,7 +70,7 @@ const Header: FC = () => {
             </nav>
 
             <div className={'authorization'}>
-              {!user ? (
+              {!auth ? (
                 <>
                   {authLinks.map((item) => {
                     return (

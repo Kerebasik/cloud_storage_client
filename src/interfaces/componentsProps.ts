@@ -9,7 +9,7 @@ export interface IFormSignUpInput {
   password: string;
 }
 
-export interface IFormLogInInput{
+export interface IFormLogInInput {
   email: string;
   password: string;
 }

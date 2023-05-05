@@ -46,9 +46,7 @@ axiosApiInstance.interceptors.response.use(
         );
         localStorage.setItem('token', response.data.accessToken);
         return axiosApiInstance.request(originalRequest);
-      } catch (e) {
-        console.log(error.response.message);
-      }
+      } catch (e) {}
     }
 
     throw error;

@@ -1,9 +1,13 @@
-import React, { FC } from 'react';
+import React, { FC, Suspense } from 'react';
+import Subscriptions from 'src/components/Subscriptions/Subscriptions';
+import Preloader from 'src/components/Preloader/Preloader';
 
 const SubscriptionsPage: FC = () => {
   return (
     <>
-      <div></div>
+      <Suspense fallback={<Preloader />}>
+        <Subscriptions />
+      </Suspense>
     </>
   );
 };
