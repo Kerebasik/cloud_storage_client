@@ -2,10 +2,12 @@ import React, { FC } from 'react';
 import './Footer.style.scss';
 
 const Footer: FC = () => {
+  const year = new Date().getFullYear();
+
   return (
     <footer>
       <div className={'container content'}>
-        <div>© 2022 All Copyrights Reserved To BitHolder</div>
+        <div>© {year} All Copyrights Reserved To BitHolder</div>
       </div>
     </footer>
   );
