@@ -1,17 +1,17 @@
 import React, { FC } from 'react';
 import { ISubscription } from 'src/models/ISubscription';
-import './Card.style.scss';
 import { useAppSelector } from 'src/hooks/redux';
 import { IUser } from 'src/models/IUser';
+import './SubscriptionCard.style.scss';
 interface CardProps {
   item: ISubscription;
 }
 
-export const convertByteToMegaByteString = (diskStorageToByte: number) => {
+export const convertByteToGigaByteString = (diskStorageToByte: number):string => {
   return `Storage: ${diskStorageToByte / 1024 ** 3} Gb`;
 };
 
-export const convertCentToDollarString = (priceInCent: number) => {
+export const convertCentToDollarString = (priceInCent: number):string => {
   if (priceInCent === 0) {
     return 'Free';
   }
@@ -22,7 +22,7 @@ const handlerOnClickButton = () => {
   console.log('click');
 };
 
-const Card: FC<CardProps> = ({ item }) => {
+const SubscriptionCard: FC<CardProps> = ({ item }) => {
   const user: IUser | undefined = useAppSelector(
     (state) => state.userReducer.user,
   );
@@ -36,7 +36,7 @@ const Card: FC<CardProps> = ({ item }) => {
           <p>{convertCentToDollarString(item.priceInCents)}</p>
         </div>
         <div className={'card__storage'}>
-          <p>{convertByteToMegaByteString(item.diskStorage)}</p>
+          <p>{convertByteToGigaByteString(item.diskStorage)}</p>
         </div>
         <div className={`card__button`}>
           <button
@@ -51,4 +51,4 @@ const Card: FC<CardProps> = ({ item }) => {
   );
 };
 
-export default Card;
+export default SubscriptionCard;
