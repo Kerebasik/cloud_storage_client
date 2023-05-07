@@ -13,7 +13,7 @@ describe('Test functions in SubscriptionCard',()=>{
     })
   })
   describe('convertByteToGigaByteString',()=>{
-    it('',()=>{
+    it('Convert byte to gigabyte',()=>{
       const data = 3
       const dataInByte = data * 1024**3
       expect(convertByteToGigaByteString(dataInByte)).toEqual(`Storage: ${data} Gb`)
