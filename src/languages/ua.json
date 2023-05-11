@@ -1,0 +1,19 @@
+{
+  "header.home": "Головна",
+  "header.about": "О нас",
+  "header.subscriptions": "Підписки",
+  "header.login": "Увійти",
+  "header.signup": "Зарегестрироваться",
+
+  "home.title": "Головна",
+  "home.subtitle": "",
+
+  "about.title": "Про нас",
+
+  "login.title": "Вхід",
+  "login.email.label": "Введіть пошту",
+  "login.email.errors": "Пошта обов'язкова",
+  "login.password.label": "Введіть пороль",
+  "login.password.errors": "Пороль обов'язковий",
+  "login.button.send": "Відправити"
+}

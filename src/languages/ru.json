@@ -1,0 +1,19 @@
+{
+  "header.home": "Главная",
+  "header.about": "Контакты",
+  "header.subscriptions": "Подписки",
+  "header.login": "Войти",
+  "header.signup": "Зарегестрироваться",
+
+  "home.title": "Главная",
+  "home.subtitle": "",
+
+  "about.title": "О нас",
+
+  "login.title": "Вход",
+  "login.email.label": "Введите почту",
+  "login.email.errors": "Почта обязательна",
+  "login.password.label": "Введите пороль",
+  "login.password.errors": "Пороль обязятелен",
+  "login.button.send": "Отправить"
+}

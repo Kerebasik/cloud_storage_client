@@ -1,7 +1,12 @@
-export interface NavLinksProps {
+export interface HeaderItem {
   path: string;
   style: string;
   name: string;
+  id: string;
+}
+
+export interface NavLinksProps {
+  item: HeaderItem;
 }
 
 export interface IFormSignUpInput {
