@@ -6,6 +6,8 @@ import { AxiosResponse } from 'axios';
 import { ITokens } from 'src/models/ITokens';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IFormLogInInput } from 'src/interfaces/componentsProps';
+import { Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
 const LogIn: FC = () => {
   const [email, setEmail] = useState('');
@@ -52,17 +54,36 @@ const LogIn: FC = () => {
       <div className="login__container">
         <div className="login__content">
           <form onSubmit={handleSubmit(handlerOnSubmit)}>
-            <label className="form__title">Log In</label>
+            <label className="form__title">
+              <FormattedMessage id={'login.title'} />
+            </label>
             <div className="input__email">
-              <label>Enter your email</label>
-              {errors.email?.type === 'required' && (
-                <p role={'alert'}>Email is required</p>
+              <label>
+                <FormattedMessage id={'login.email.label'} />
+              </label>
+              {errors.email?.message === 'emailIsRequired' && (
+                <div className={'input__email_alert'}>
+                  <p>
+                    <FormattedMessage id={'login.email.errors.required'} />
+                  </p>
+                </div>
+              )}
+              {errors.email?.message === 'invalidEmailAddress' && (
+                <div className={'input__email_alert'}>
+                  <p>
+                    <FormattedMessage
+                      id={'login.email.errors.invalidEmailAddress'}
+                    />
+                  </p>
+                </div>
               )}
               <input
                 {...register('email', {
-                  required: true,
-                  pattern:
-                    /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+                  required: { value: true, message: 'emailIsRequired' },
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: 'invalidEmailAddress',
+                  },
                 })}
                 className="input"
                 type="email"
@@ -72,17 +93,51 @@ const LogIn: FC = () => {
               />
             </div>
             <div className="input__password">
-              <label>Enter password</label>
-              {errors.password?.type === 'required' && (
-                <p role={'alert'}>Password is required</p>
+              <label>
+                <FormattedMessage id={'login.password.label'} />
+              </label>
+              {errors.password?.message === 'passwordIsRequired' && (
+                <div className={'input__password_alert'}>
+                  <p>
+                    <FormattedMessage id={'login.password.errors.required'} />
+                  </p>
+                </div>
+              )}
+              {errors.password?.message === 'passwordNotValid' && (
+                <div className={'input__password_alert'}>
+                  <p>
+                    <FormattedMessage id={'login.password.errors.notValid'} />
+                  </p>
+                </div>
+              )}
+              {errors.password?.message === 'minimum6Charters' && (
+                <div className={'input__password_alert'}>
+                  <p>
+                    <FormattedMessage
+                      id={'login.password.errors.minCharters'}
+                    />
+                  </p>
+                </div>
+              )}
+              {errors.password?.message === 'maximum20Charters' && (
+                <div className={'input__password_alert'}>
+                  <p>
+                    <FormattedMessage
+                      id={'login.password.errors.maxCharters'}
+                    />
+                  </p>
+                </div>
               )}
               <input
                 type="password"
                 {...register('password', {
-                  required: true,
-                  minLength: 3,
-                  maxLength: 20,
-                  pattern: /(?=.*d)(?=.*[a-z])(?=.*[A-Z])/,
+                  required: { value: true, message: 'passwordIsRequired' },
+                  minLength: { value: 6, message: 'minimum6Charters' },
+                  maxLength: { value: 20, message: 'maximum20Charters' },
+                  pattern: {
+                    value: /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])/,
+                    message: 'passwordNotValid',
+                  },
                 })}
                 className="input"
                 value={password}
@@ -91,9 +146,24 @@ const LogIn: FC = () => {
               />
             </div>
             <div className={'input__button'}>
-              <button type="submit">Send</button>
+              <button type="submit" formNoValidate>
+                <FormattedMessage id={'login.button.send'} />
+              </button>
             </div>
           </form>
+          <hr />
+          <div className={'login__text'}>
+            <p>
+              <FormattedMessage id={'login.text.or'} />
+            </p>
+          </div>
+          <div className={'login__button_signup'}>
+            <Link to={'/signup'}>
+              <button>
+                <FormattedMessage id={'login.button.signup'} />
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     </>

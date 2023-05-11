@@ -7,11 +7,13 @@ interface CardProps {
   item: ISubscription;
 }
 
-export const convertByteToGigaByteString = (diskStorageToByte: number):string => {
+export const convertByteToGigaByteString = (
+  diskStorageToByte: number,
+): string => {
   return `Storage: ${diskStorageToByte / 1024 ** 3} Gb`;
 };
 
-export const convertCentToDollarString = (priceInCent: number):string => {
+export const convertCentToDollarString = (priceInCent: number): string => {
   if (priceInCent === 0) {
     return 'Free';
   }

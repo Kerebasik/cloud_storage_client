@@ -1,45 +1,45 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import 'src/components/Header/Header.style.scss';
-import { NavLinksProps } from 'src/interfaces/componentsProps';
+import { HeaderItem, NavLinksProps } from 'src/interfaces/componentsProps';
 import { useAuth } from '../../hooks/useAuth';
+import { FormattedMessage } from 'react-intl';
 
-const links: Array<NavLinksProps> = [
+const links: Array<HeaderItem> = [
   {
     path: '/',
     style: 'link',
     name: 'Home',
-  },
-  {
-    path: '/about',
-    style: 'link',
-    name: 'About us',
+    id: 'header.home',
   },
   {
     path: '/subscriptions',
     style: 'link',
     name: 'Subscriptions',
+    id: 'header.subscriptions',
+  },
+  {
+    path: '/about',
+    style: 'link',
+    name: 'About us',
+    id: 'header.about',
   },
 ];
 
-const authLinks: Array<NavLinksProps> = [
+const authLinks: Array<HeaderItem> = [
   {
     path: '/login',
     style: 'link_login',
     name: 'Log in',
-  },
-  {
-    path: '/signup',
-    style: 'link_signup',
-    name: 'Sign up',
+    id: 'header.login',
   },
 ];
 
-const NavLinks: FC<NavLinksProps> = ({ path, style, name }: NavLinksProps) => {
+const NavLinks: FC<NavLinksProps> = ({ item }) => {
   return (
     <>
-      <Link to={path} className={style}>
-        {name}
+      <Link to={item.path} className={item.style}>
+        <FormattedMessage id={`${item.id}`} />
       </Link>
     </>
   );
@@ -58,14 +58,7 @@ const Header: FC = () => {
 
             <nav className={'navbar'}>
               {links.map((item) => {
-                return (
-                  <NavLinks
-                    key={item.name}
-                    path={item.path}
-                    style={item.style}
-                    name={item.name}
-                  />
-                );
+                return <NavLinks key={item.name} item={item} />;
               })}
             </nav>
 
@@ -73,14 +66,7 @@ const Header: FC = () => {
               {!auth ? (
                 <>
                   {authLinks.map((item) => {
-                    return (
-                      <NavLinks
-                        key={item.name}
-                        name={item.name}
-                        style={item.style}
-                        path={item.path}
-                      />
-                    );
+                    return <NavLinks key={item.name} item={item} />;
                   })}
                 </>
               ) : (

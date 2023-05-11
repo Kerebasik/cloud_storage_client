@@ -35,7 +35,7 @@ header {
   }
 
   .authorization {
-    flex: 1 0 20%;
+    flex: 1 0 10%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -43,7 +43,7 @@ header {
   }
 
   .navbar {
-    flex: 1 1 60%;
+    flex: 1 1 70%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -59,15 +59,11 @@ header {
   }
   .link {
     color: white;
-    &_signup {
-      color: black;
-      @extend %button_auth;
-      background-color: rgb(255, 182, 40);
-    }
-
     &_login {
       @extend %button_auth;
-      color: white;
+      color: black;
+      font-weight: 700;
+      background-color: rgb(255, 182, 40);
     }
   }
 }

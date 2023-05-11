@@ -1,0 +1,23 @@
+.about{
+  &__content{
+    flex: 1 1 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  &__text{
+    margin: 25px 0;
+    p{
+      margin: 15px 0;
+    }
+  }
+  &__title{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 25px 0;
+    background-color: rgba(40, 40, 40, 0.9);
+    box-shadow: 0 0 15px 20px rgb(40, 40, 40);
+  };
+}
