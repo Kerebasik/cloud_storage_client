@@ -49,6 +49,12 @@
   "home.text.list.item.allDeletedFiles": "All deleted files cannot be recovered.",
 
   "about.title": "About us",
+  "about.subtitle": "Upload, transform and deliver content easily",
+  "about.button.plans": "Plans & Pricing",
+  "about.button.signup": "Sign Up Free",
+  "about.text.title": "What is BitHolder?",
+  "about.text.firstParagraph": "BitHolder is a robust set of tools and powerful APIs that allow you to upload, transform and deliver content easily. Our advanced UI integrations provide great experience to your users and our powerful APIs let you quickly and seamlessly manage all your file management needs. Filestack’s scalable infrastructure powers billions of uploads, transformations and downloads every month providing reliable performance to users anywhere in the world.",
+  "about.text.secondParagraph": " BitHolder enables developers to upload and store large files, transform and manipulate images and other file types, and deliver that content with blazing speed, responsively, across any type of desktop or mobile device. Filestack is headquartered in San Antonio, Texas and is used by more than 50,000 app developers around the world.",
 
   "login.title": "Log In",
   "login.email.label": "Enter your email",
