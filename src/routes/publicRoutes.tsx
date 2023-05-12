@@ -8,6 +8,8 @@ import AboutPage from 'src/pages/AboutPage/AboutPage';
 import ErrorPage from 'src/pages/ErroePage/ErrorPage';
 import { AuthProvider } from 'src/hoc/AuthProvider';
 import SubscriptionsPage from '../pages/SubscriptionsPage/SubscriptionsPage';
+import { PrivateRoutes } from './privateRoutes';
+import UserPage from '../pages/UserPage/UserPage';
 
 const PublicRoutes = () => {
   return (
@@ -17,6 +19,14 @@ const PublicRoutes = () => {
           <Route index element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/subscriptions" element={<SubscriptionsPage />} />
+          <Route
+            path="/user"
+            element={
+              <PrivateRoutes>
+                <UserPage />
+              </PrivateRoutes>
+            }
+          />
         </Route>
 
         <Route path="/login" element={<LogInPage />} />

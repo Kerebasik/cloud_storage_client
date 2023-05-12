@@ -6,12 +6,9 @@ interface PrivateRoutes {
   children: FC;
 }
 
-export type Auth = {
-  authUser: boolean;
-};
-
-const PrivateRoutes: FC<PrivateRoutes> = ({ children }): any => {
+const PrivateRoutes: FC<any> = ({ children }): any => {
   const { auth } = useAuth();
+
   const location = useLocation();
   if (!auth) {
     return <Navigate to={'/login'} state={{ from: location.pathname }} />;
