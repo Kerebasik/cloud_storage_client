@@ -1,16 +1,37 @@
-.title{
- h1{
+%button_auth {
+  text-align: center;
+  border: 1px solid white;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+}
+
+.title {
+  h1 {
+    font-weight: 700;
+    font-size: 36px;
+  }
+  margin-bottom: 10px;
+}
+
+h3 {
+  margin: 10px 0;
+}
+
+.text {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.login__button {
+  @extend %button_auth;
   font-weight: 700;
-  font-size: 36px;
- }
- margin-bottom: 10px;
 }
 
-h3{
- margin: 10px 0;
-}
-
-.text{
- font-size: 18px;
- line-height: 24px;
+.signup__button {
+  font-weight: 700;
+  @extend %button_auth;
+  background-color: rgb(255, 182, 40);
 }

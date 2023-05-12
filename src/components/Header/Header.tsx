@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import 'src/components/Header/Header.style.scss';
 import { HeaderItem, NavLinksProps } from 'src/interfaces/componentsProps';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from 'src/hooks/useAuth';
 import { FormattedMessage } from 'react-intl';
 
 const links: Array<HeaderItem> = [
@@ -29,7 +29,7 @@ const links: Array<HeaderItem> = [
 const authLinks: Array<HeaderItem> = [
   {
     path: '/login',
-    style: 'link_login',
+    style: 'link__login',
     name: 'Log in',
     id: 'header.login',
   },
@@ -72,7 +72,7 @@ const Header: FC = () => {
               ) : (
                 <>
                   <div>
-                    <Link to={'/'}>
+                    <Link to={'/user'}>
                       <img
                         className="avatar"
                         src={require('src/assets/userIcon.png')}
