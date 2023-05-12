@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import { AuthContext, TAuthContext } from '../hoc/AuthProvider';
+import { AuthContext, TAuthContextInitial } from '../hoc/AuthProvider';
 
-export function useAuth(): TAuthContext {
-  return useContext<TAuthContext>(AuthContext);
+export function useAuth(): TAuthContextInitial {
+  return useContext<TAuthContextInitial>(AuthContext);
 }

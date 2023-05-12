@@ -2,17 +2,20 @@ import { createContext, useState } from 'react';
 
 export type TAuthContextInitial = {
   auth: boolean;
+  login: Function;
+  logout: Function;
 };
 
-export type TAuthContext = TAuthContextInitial & {
-  login?: Function;
-  logout?: Function;
+const initialContext: TAuthContextInitial = {
+  auth: false,
+  login: () => {},
+  logout: () => {},
 };
 
-export const AuthContext = createContext<TAuthContext>({ auth: false });
+export const AuthContext = createContext<TAuthContextInitial>(initialContext);
 
 export const AuthProvider = ({ children }: any) => {
-  const [auth, setAuth] = useState<boolean>(false);
+  const [auth, setAuth] = useState<boolean>(initialContext.auth);
 
   const login = (cb: Function) => {
     setAuth(true);
@@ -24,7 +27,7 @@ export const AuthProvider = ({ children }: any) => {
     cb();
   };
 
-  const value: TAuthContext = { auth, login, logout };
+  const value: TAuthContextInitial = { auth, login, logout };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
