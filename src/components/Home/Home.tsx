@@ -53,7 +53,7 @@ const Home: FC = () => {
           - <FormattedMessage id={'home.text.publicFile.explanation'} />
         </p>
       </div>
-      <div className={'home__list'}>
+      <div className={'home__list text'}>
         <ul>
           <li>
             <strong>
