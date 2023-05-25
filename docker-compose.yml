@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  client:
+    container_name: client
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env
+    environment:
+      - PORT=$PORT
+      - REACT_APP_MAXIMUM_FILE=$REACT_APP_MAXIMUM_FILE
+      - REACT_APP_API_URL=$REACT_APP_API_URL
+      - REACT_APP_PREFIX=$REACT_APP_PREFIX
+      - REACT_APP_NAME=$REACT_APP_NAME
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
