@@ -1,9 +1,11 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import 'src/components/Header/Header.style.scss';
 import { HeaderItem, NavLinksProps } from 'src/interfaces/componentsProps';
 import { useAuth } from 'src/hooks/useAuth';
 import { FormattedMessage } from 'react-intl';
+import { useAppSelector } from '../../hooks/redux';
+import { getUserAvatar } from '../../services/http/getUserAvatar';
 
 const links: Array<HeaderItem> = [
   {
@@ -21,7 +23,7 @@ const links: Array<HeaderItem> = [
   {
     path: '/about',
     style: 'link',
-    name: 'About us',
+    name: 'About',
     id: 'header.about',
   },
 ];
@@ -46,7 +48,13 @@ const NavLinks: FC<NavLinksProps> = ({ item }) => {
 };
 
 const Header: FC = () => {
-  const { auth } = useAuth();
+  const [auth, setAuth] = useState<boolean>(false);
+  const { user } = useAppSelector((state) => state.userReducer);
+  const provider = useAuth();
+  useEffect(() => {
+    setAuth(provider.auth);
+  }, [provider]);
+
   return (
     <>
       <header>
@@ -63,23 +71,23 @@ const Header: FC = () => {
             </nav>
 
             <div className={'authorization'}>
-              {!auth ? (
-                <>
-                  {authLinks.map((item) => {
-                    return <NavLinks key={item.name} item={item} />;
-                  })}
-                </>
-              ) : (
+              {auth ? (
                 <>
                   <div>
                     <Link to={'/user'}>
                       <img
                         className="avatar"
-                        src={require('src/assets/userIcon.png')}
+                        src={getUserAvatar(user!)}
                         alt="user avatar"
                       />
                     </Link>
                   </div>
+                </>
+              ) : (
+                <>
+                  {authLinks.map((item) => {
+                    return <NavLinks key={item.name} item={item} />;
+                  })}
                 </>
               )}
             </div>

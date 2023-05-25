@@ -10,8 +10,8 @@ const Home: FC = () => {
   const maxFileSize: number = Number(process.env.REACT_APP_MAXIMUM_FILE);
   return (
     <div className={'home__content'}>
-      <div className={'home__title title'}>
-        <h1>
+      <div className={'home__title'}>
+        <h1 className={'title'}>
           <FormattedMessage id={'home.title'} />
         </h1>
       </div>

@@ -1,15 +1,18 @@
 import React, { FC, useState } from 'react';
-import 'src/components/SignUp/SignUp.style.scss';
-import axiosApiInstance from 'src/http/axios';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IFormSignUpInput } from 'src/interfaces/componentsProps';
 import { FormattedMessage } from 'react-intl';
+import { userSignUp } from 'src/services/http/userSignUp';
+import { useAuth } from 'src/hooks/useAuth';
+import 'src/components/SignUp/SignUp.style.scss';
 
 const SignUp: FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [serverErrors, setServerErrors] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const navigate = useNavigate();
+  const auth = useAuth();
   const {
     register,
     formState: { errors },
@@ -17,24 +20,13 @@ const SignUp: FC = () => {
   } = useForm<IFormSignUpInput>();
 
   const handlerOnSubmit: SubmitHandler<IFormSignUpInput> = () => {
-    axiosApiInstance
-      .post(
-        '/auth/registration',
-        JSON.stringify({
-          email,
-          password,
-        }),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
+    userSignUp({ email, password })
       .then(() => {
-        navigate(-1);
+        navigate('/');
+        auth.login();
       })
-      .catch(() => {
-        console.log('error axios');
+      .catch((error) => {
+        setServerErrors(error.response.data.message);
       });
   };
 
@@ -54,6 +46,11 @@ const SignUp: FC = () => {
             <label className="form__title">
               <FormattedMessage id={'signup.title'} />
             </label>
+            {serverErrors !== '' && (
+              <div className={'input__email_alert'}>
+                <p>{serverErrors}</p>
+              </div>
+            )}
             <div className="input__email">
               <label>
                 <FormattedMessage id={'signup.email.label'} />

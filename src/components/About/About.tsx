@@ -7,8 +7,8 @@ const About: FC = () => {
   return (
     <div className={'about__content'}>
       <div className={'about__container'}>
-        <div className={'about__title title'}>
-          <h1>
+        <div className={'about__title'}>
+          <h1 className={'title'}>
             <FormattedMessage id={'about.title'} />
           </h1>
           <div className={'about__title__text text'}>

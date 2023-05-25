@@ -1,18 +1,22 @@
 import React, { FC, useState } from 'react';
-import axiosApiInstance from 'src/http/axios';
 import { useNavigate } from 'react-router-dom';
 import 'src/components/LogIn/LogIn.style.scss';
-import { AxiosResponse } from 'axios';
-import { ITokens } from 'src/models/ITokens';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IFormLogInInput } from 'src/interfaces/componentsProps';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import { useAuth } from 'src/hooks/useAuth';
+import { userLogIn } from 'src/services/http/userLogIn';
+import { useAppDispatch } from '../../hooks/redux';
+import { fetchUser } from '../../store/reducers/actionCreator';
 
 const LogIn: FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
   const navigate = useNavigate();
+  const context = useAuth();
+  const dispatch = useAppDispatch();
   const {
     register,
     formState: { errors },
@@ -20,24 +24,16 @@ const LogIn: FC = () => {
   } = useForm<IFormLogInInput>();
 
   const handlerOnSubmit: SubmitHandler<IFormLogInInput> = async () => {
-    await axiosApiInstance
-      .post(
-        '/auth/login',
-        JSON.stringify({
-          email,
-          password,
-        }),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-      .then((response: AxiosResponse<ITokens>) => {
-        localStorage.setItem('token', response.data.accessToken);
+    userLogIn({ email, password })
+      .then(() => {
         setEmail('');
         setPassword('');
-        navigate(-1);
+        navigate('/');
+        dispatch(fetchUser());
+        context.login();
+      })
+      .catch((error?) => {
+        setError(error?.response?.data?.message);
       });
   };
 
@@ -57,6 +53,11 @@ const LogIn: FC = () => {
             <label className="form__title">
               <FormattedMessage id={'login.title'} />
             </label>
+            {error !== '' && (
+              <div className={'input__email_alert'}>
+                <p>{error}</p>
+              </div>
+            )}
             <div className="input__email">
               <label>
                 <FormattedMessage id={'login.email.label'} />
