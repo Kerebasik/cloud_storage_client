@@ -1,6 +1,6 @@
 {
   "header.home": "Home",
-  "header.about": "About us",
+  "header.about": "About",
   "header.subscriptions": "Subscriptions",
   "header.login": "Log in",
   "header.signup": "Sign up",
@@ -78,5 +78,7 @@
   "signup.password.errors.notValid": "Password is not valid",
   "signup.password.errors.minCharters": "Minimum 6 charters",
   "signup.password.errors.maxCharters": "Maximum 20 charters",
-  "signup.button.send": "Send"
+  "signup.button.send": "Send",
+
+  "user.title": "Profile"
 }
