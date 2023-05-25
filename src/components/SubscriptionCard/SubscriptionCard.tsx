@@ -9,8 +9,8 @@ interface CardProps {
 
 export const convertByteToGigaByteString = (
   diskStorageToByte: number,
-): string => {
-  return `Storage: ${diskStorageToByte / 1024 ** 3} Gb`;
+): number => {
+  return diskStorageToByte / 1024 ** 3;
 };
 
 export const convertCentToDollarString = (priceInCent: number): string => {
@@ -35,10 +35,10 @@ const SubscriptionCard: FC<CardProps> = ({ item }) => {
           <h2>{item.name}</h2>
         </div>
         <div className={'card__price'}>
-          <p>{convertCentToDollarString(item.priceInCents)}</p>
+          <p>Storage: {convertCentToDollarString(item.priceInCents)}</p>
         </div>
         <div className={'card__storage'}>
-          <p>{convertByteToGigaByteString(item.diskStorage)}</p>
+          <p>{convertByteToGigaByteString(item.diskStorage)} Gb</p>
         </div>
         <div className={`card__button`}>
           <button
