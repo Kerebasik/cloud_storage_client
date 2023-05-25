@@ -1,12 +1,14 @@
 import React, { FC, Suspense } from 'react';
 import Preloader from 'src/components/Preloader/Preloader';
-import User from 'src/components/User/User';
+const UserProfile = React.lazy(
+  () => import('src/components/UserProfile/UserProfile'),
+);
 
 const UserPage: FC = () => {
   return (
     <>
       <Suspense fallback={<Preloader />}>
-        <User />
+        <UserProfile />
       </Suspense>
     </>
   );

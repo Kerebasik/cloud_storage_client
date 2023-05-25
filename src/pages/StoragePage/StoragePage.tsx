@@ -1,16 +1,16 @@
 import React, { FC, Suspense } from 'react';
 import Preloader from 'src/components/Preloader/Preloader';
 
-const SignUp = React.lazy(() => import('src/components/SignUp/SignUp'));
+const Storage = React.lazy(() => import('src/components/Storage/Storage'));
 
-const SignUpPage: FC = () => {
+const StoragePage: FC = () => {
   return (
     <>
       <Suspense fallback={<Preloader />}>
-        <SignUp />
+        <Storage />
       </Suspense>
     </>
   );
 };
 
-export default SignUpPage;
+export default StoragePage;
