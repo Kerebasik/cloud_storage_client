@@ -1,13 +1,13 @@
-import { useLocation, Navigate } from 'react-router-dom';
-import { FC } from 'react';
+import { Navigate } from 'react-router-dom';
 import { useAuth } from 'src/hooks/useAuth';
+import { FC, PropsWithChildren } from 'react';
 
-export const PrivateRoutes: FC<any> = ({ children }) => {
+export const PrivateRoutes: FC<PropsWithChildren> = ({ children }) => {
   const { auth } = useAuth();
-  const location = useLocation();
 
   if (auth) {
-    return children;
+    return <>{children}</>;
   }
-  return <Navigate to={'/login'} state={{ from: location.pathname }} />;
+
+  return <Navigate to={'/login'} />;
 };
