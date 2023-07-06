@@ -11,6 +11,7 @@ import Russian from 'src/languages/ru.json';
 
 import { setupStore } from './store/store';
 import { IntlProvider } from 'react-intl';
+import ToastifyProvider from './hoc/ToastifyProvider';
 
 const store = setupStore();
 const userLocation = 'en'; // navigator.language.split(/[-_]/)[0];
@@ -36,11 +37,13 @@ root.render(
     <IntlProvider
       locale={navigator.language}
       messages={checkLanguages(userLocation)}>
-      <Provider store={store}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </Provider>
+      <ToastifyProvider>
+        <Provider store={store}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </Provider>
+      </ToastifyProvider>
     </IntlProvider>
   </React.StrictMode>,
 );
