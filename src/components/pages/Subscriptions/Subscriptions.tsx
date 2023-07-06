@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { getSubscriptions } from 'src/services/http/getSubscriptions';
 import { ISubscription } from 'src/models/ISubscription';
-import SubscriptionCard from 'src/components/SubscriptionCard/SubscriptionCard';
+import SubscriptionCard from 'src/components/pages/SubscriptionCard/SubscriptionCard';
 
 import './Subscriptions.style.scss';
 
