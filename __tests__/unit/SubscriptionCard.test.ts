@@ -1,7 +1,7 @@
 import {
   convertCentToDollarString,
   convertByteToGigaByteString,
-} from '../../src/components/SubscriptionCard/SubscriptionCard';
+} from '../../src/components/pages/SubscriptionCard/SubscriptionCard';
 import { describe, it, expect } from '@jest/globals';
 
 describe('Test functions in SubscriptionCard', () => {
@@ -21,9 +21,7 @@ describe('Test functions in SubscriptionCard', () => {
     it('Convert byte to gigabyte', () => {
       const data = 3;
       const dataInByte = data * 1024 ** 3;
-      expect(convertByteToGigaByteString(dataInByte)).toEqual(
-        `Storage: ${data} Gb`,
-      );
+      expect(convertByteToGigaByteString(dataInByte)).toEqual(data);
     });
   });
 });
