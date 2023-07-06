@@ -1,16 +1,15 @@
 import React, { FC, Suspense } from 'react';
+import Subscriptions from 'src/components/pages/Subscriptions/Subscriptions';
 import Preloader from 'src/components/Preloader/Preloader';
 
-import LogIn from 'src/components/LogIn/LogIn';
-
-const LogInPage: FC = () => {
+const SubscriptionsPage: FC = () => {
   return (
     <>
       <Suspense fallback={<Preloader />}>
-        <LogIn />
+        <Subscriptions />
       </Suspense>
     </>
   );
 };
 
-export default LogInPage;
+export default SubscriptionsPage;

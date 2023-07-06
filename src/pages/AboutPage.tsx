@@ -1,15 +1,15 @@
 import React, { FC, Suspense } from 'react';
 import Preloader from 'src/components/Preloader/Preloader';
-const Home = React.lazy(() => import('src/components/Home/Home'));
+const About = React.lazy(() => import('src/components/pages/About/About'));
 
-const HomePage: FC = () => {
+const AboutPage: FC = () => {
   return (
     <>
       <Suspense fallback={<Preloader />}>
-        <Home />
+        <About />
       </Suspense>
     </>
   );
 };
 
-export default HomePage;
+export default AboutPage;
