@@ -1,0 +1,73 @@
+.uploadStorage {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &__content {
+    border: 1px solid;
+    width: 50%;
+    padding: 20px;
+    border-radius: 20px;
+    font-size: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__title {
+    width: 100%;
+    p {
+      text-align: center;
+    }
+  }
+
+  &__switch {
+    p {
+      margin: 5px 0;
+    }
+    label {
+      margin: 0 5px;
+    }
+  }
+
+  &__directory{
+    label{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      input{
+        font-size: 18px;
+        border: 1px solid;
+        border-radius: 10px;
+        padding: 5px;
+      }
+    }
+  }
+
+  &__dropzone{
+    border:3px dashed rgba(255, 182, 40);
+  }
+
+  &__errorAlert{
+    color: red;
+  }
+
+  &__submitButton {
+    border: 1px solid rgb(40, 40, 40);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    border-radius: 10px;
+    margin: 20px 0;
+    background-color: rgb(255, 182, 40);
+    button {
+      height: 100%;
+      width: 100%;
+      font-weight: 700;
+      background: none;
+      font-size:18px;
+    }
+  }
+}
