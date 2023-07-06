@@ -1,0 +1,41 @@
+.storageOutlet {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  &__empty {
+    img {
+      max-width: 100%;
+    }
+    display: flex;
+    justify-content: center;
+    opacity: 0.2;
+    flex-wrap: wrap;
+  }
+
+  &__panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(40, 40, 40);
+    padding: 5px;
+
+    button {
+      border: 2px solid rgb(40, 40, 40);
+      padding: 5px 10px;
+      font-weight: 700;
+      border-radius: 10px;
+      background-color: rgb(255, 182, 40);
+    }
+  }
+  &__item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid;
+    padding: 5px;
+    align-items: center;
+    img {
+      height: 20px;
+    }
+  }
+}
