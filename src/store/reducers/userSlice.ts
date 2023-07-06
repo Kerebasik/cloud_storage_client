@@ -1,17 +1,12 @@
 import { IUser } from 'src/models/IUser';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchUser } from './actionCreator';
-
-interface UserState {
-  user: IUser | undefined;
-  isLoading: boolean;
-  errors: string;
-}
+import {UserState} from "../../interfaces/states";
 
 const initialState: UserState = {
   user: undefined,
   isLoading: false,
-  errors: '',
+  error: '',
 };
 
 export const userSlice = createSlice({
@@ -20,23 +15,34 @@ export const userSlice = createSlice({
   reducers: {
     deleteUser(state) {
       state.user = initialState.user;
-      state.errors = initialState.errors;
+      state.error = initialState.error;
       state.isLoading = initialState.isLoading;
     },
+
+    addNewDir(state, action) {
+      state.user?.files.push(action.payload);
+    },
   },
-  extraReducers: {
-    [fetchUser.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
-      state.errors = '';
-      state.user = action.payload;
-      state.isLoading = false;
-    },
-    [fetchUser.pending.type]: (state) => {
-      state.isLoading = true;
-    },
-    [fetchUser.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoading = false;
-      state.errors = action.payload;
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(
+        fetchUser.fulfilled.type,
+        (state, action: PayloadAction<IUser>) => {
+          state.error = '';
+          state.user = action.payload;
+          state.isLoading = false;
+        },
+      )
+      .addCase(fetchUser.pending.type, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(
+        fetchUser.rejected.type,
+        (state, action: PayloadAction<string>) => {
+          state.isLoading = false;
+          state.error = action.payload;
+        },
+      );
   },
 });
 
