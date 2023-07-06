@@ -3,7 +3,7 @@ export interface IFile {
   name: string;
   type: string;
   path: string;
-  date: Date;
+  date: string;
   size: number;
   user: string;
   parent?: string;

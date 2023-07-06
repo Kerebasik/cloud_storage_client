@@ -7,5 +7,5 @@ export interface IUser {
   activationLink: string;
   activated: boolean;
   avatar: string;
-  files: string;
+  files: string[];
 }
