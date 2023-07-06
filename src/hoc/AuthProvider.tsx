@@ -4,7 +4,6 @@ import {
   getLocalStorageItem,
 } from '../services/localStorageService';
 import { LocalStorageVariable } from '../enums/localStorageVariable';
-import { useAppSelector } from '../hooks/redux';
 
 export type TAuthContextInitial = {
   auth: boolean;
@@ -21,9 +20,8 @@ const initialContext: TAuthContextInitial = {
 export const AuthContext = createContext<TAuthContextInitial>(initialContext);
 
 export const AuthProvider = ({ children }: any) => {
-  const user = useAppSelector((state) => state.userReducer.user);
   const [auth, setAuth] = useState<boolean>(
-    !!getLocalStorageItem(LocalStorageVariable.accessToken) || !!user,
+    !!getLocalStorageItem(LocalStorageVariable.accessToken),
   );
 
   const login = () => {
