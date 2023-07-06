@@ -1,0 +1,47 @@
+$sizeButton: 50px;
+
+.backButton_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  color: white;
+  bottom: 0;
+  left: 0;
+  margin: 25px;
+  width: $sizeButton;
+  height: $sizeButton;
+  border: 2px solid white;
+  border-radius: 25px;
+  background-color: white;
+  transition-property: color, background-color;
+  transition-duration: 1s;
+  button {
+    height: 100%;
+    width: 100%;
+    font-weight: 700;
+    background: none;
+  }
+}
+
+@media (hover: hover) {
+  .backButton_container {
+    &:hover {
+      background-color: black;
+      button {
+        color: white;
+      }
+    }
+  }
+}
+
+@media (hover: none) {
+  .backButton_container {
+    &:active {
+      background-color: black;
+      button {
+        color: white;
+      }
+    }
+  }
+}
