@@ -1,33 +1,41 @@
 import React, { FC, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IFormSignUpInput } from 'src/interfaces/componentsProps';
 import { FormattedMessage } from 'react-intl';
 import { userSignUp } from 'src/services/http/userSignUp';
 import { useAuth } from 'src/hooks/useAuth';
-import 'src/components/SignUp/SignUp.style.scss';
+import 'src/components/pages/SignUp/SignUp.style.scss';
+import { useAppDispatch } from "../../../hooks/redux";
+import { fetchUser } from "../../../store/reducers/actionCreator";
+import { toast } from "react-toastify";
 
 const SignUp: FC = () => {
   const [email, setEmail] = useState<string>('');
-  const [serverErrors, setServerErrors] = useState<string>('');
+  const dispatch = useAppDispatch();
   const [password, setPassword] = useState<string>('');
   const navigate = useNavigate();
   const auth = useAuth();
+  const location = useLocation()
   const {
     register,
+    reset,
     formState: { errors },
-    handleSubmit,
+    handleSubmit
   } = useForm<IFormSignUpInput>();
 
   const handlerOnSubmit: SubmitHandler<IFormSignUpInput> = () => {
     userSignUp({ email, password })
       .then(() => {
-        navigate('/');
+        dispatch(fetchUser());
         auth.login();
+        navigate('/login',{state:location.state})
       })
       .catch((error) => {
-        setServerErrors(error.response.data.message);
-      });
+        toast.error(error.response.data.message);
+      }).finally(()=>{
+        reset()
+    });
   };
 
   const handlerOnChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,11 +54,6 @@ const SignUp: FC = () => {
             <label className="form__title">
               <FormattedMessage id={'signup.title'} />
             </label>
-            {serverErrors !== '' && (
-              <div className={'input__email_alert'}>
-                <p>{serverErrors}</p>
-              </div>
-            )}
             <div className="input__email">
               <label>
                 <FormattedMessage id={'signup.email.label'} />
