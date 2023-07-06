@@ -1,40 +1,47 @@
 import React, { FC, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import 'src/components/LogIn/LogIn.style.scss';
+import { useLocation, useNavigate } from "react-router-dom";
+import 'src/components/pages/LogIn/LogIn.style.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IFormLogInInput } from 'src/interfaces/componentsProps';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { useAuth } from 'src/hooks/useAuth';
 import { userLogIn } from 'src/services/http/userLogIn';
-import { useAppDispatch } from '../../hooks/redux';
-import { fetchUser } from '../../store/reducers/actionCreator';
+import { useAppDispatch } from '../../../hooks/redux';
+import { fetchUser } from '../../../store/reducers/actionCreator';
+import { toast } from 'react-toastify';
+import { LocationState } from "../../../interfaces/states";
+
+
 
 const LogIn: FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<string>('');
   const navigate = useNavigate();
-  const context = useAuth();
+  const auth = useAuth();
+  const location = useLocation() as LocationState;
   const dispatch = useAppDispatch();
   const {
     register,
     formState: { errors },
     handleSubmit,
+    reset
   } = useForm<IFormLogInInput>();
 
   const handlerOnSubmit: SubmitHandler<IFormLogInInput> = async () => {
     userLogIn({ email, password })
       .then(() => {
-        setEmail('');
-        setPassword('');
-        navigate('/');
         dispatch(fetchUser());
-        context.login();
+        auth.login();
+
+        location.state?.from ? navigate(`${location.state.from}`) : navigate('/')
       })
-      .catch((error?) => {
-        setError(error?.response?.data?.message);
-      });
+      .catch((error) => {
+        toast.error(error.response.data.message);
+      })
+      .finally(()=>{
+        reset()
+    });
   };
 
   const handlerOnChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,11 +60,6 @@ const LogIn: FC = () => {
             <label className="form__title">
               <FormattedMessage id={'login.title'} />
             </label>
-            {error !== '' && (
-              <div className={'input__email_alert'}>
-                <p>{error}</p>
-              </div>
-            )}
             <div className="input__email">
               <label>
                 <FormattedMessage id={'login.email.label'} />
@@ -159,7 +161,7 @@ const LogIn: FC = () => {
             </p>
           </div>
           <div className={'login__button_signup'}>
-            <Link to={'/signup'}>
+            <Link to={'/signup'} state={location.state}>
               <button>
                 <FormattedMessage id={'login.button.signup'} />
               </button>
