@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import ProgressBar from '@ramonak/react-progress-bar';
 import './UserProfile.style.scss';
@@ -9,11 +9,16 @@ import { userSlice } from 'src/store/reducers/userSlice';
 import { ISubscription } from 'src/models/ISubscription';
 import { convertByteToGigaByteString } from '../SubscriptionCard/SubscriptionCard';
 import { userLogOut } from 'src/services/http/userLogOut';
-import { setUserAvatar } from '../../services/http/setUserAvatar';
-import { IUser } from '../../models/IUser';
-import { getUserAvatar } from '../../services/http/getUserAvatar';
+import { setUserAvatar } from 'src/services/http/setUserAvatar';
+import { IUser } from 'src/models/IUser';
+import defaultimage from 'src/assets/userIcon.png';
+import { getUserAvatar } from '../../../services/http/getUserAvatar';
+import { toast } from "react-toastify";
 
-const convertUsedSpace = (usedStorage: number, diskStorage: number): number => {
+export const convertUsedSpace = (
+  usedStorage: number,
+  diskStorage: number,
+): number => {
   return (usedStorage / diskStorage) * 100;
 };
 
@@ -21,6 +26,7 @@ const UserProfile: FC = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();
   const dispatch = useAppDispatch();
+  const [avatar, setAvatar] = useState(defaultimage);
   const { deleteUser } = userSlice.actions;
   const [user, setUser] = useState<IUser | undefined>(
     useAppSelector((state) => state.userReducer.user),
@@ -41,11 +47,18 @@ const UserProfile: FC = () => {
     });
   };
 
-  const avatarOnChangeHandler = (list: FileList) => {
-    const file = list[0];
-    setUserAvatar(file).then((response) => {
-      setUser(response.data);
-    });
+  const avatarOnChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const fileList = e.target.files;
+    if (fileList!.length > 0) {
+      setUserAvatar(fileList![0])
+        .then((response) => {
+          setUser(response.data);
+        })
+        .catch((error) => {
+          setUser(user);
+          toast.error(error.response.data.message);
+        });
+    }
   };
 
   const upgradeSubscriptionForUserHandler = () => {
@@ -59,6 +72,16 @@ const UserProfile: FC = () => {
     setSubscription(result);
   }, [user, subscriptions]);
 
+  useEffect(() => {
+    const getImage = async () => {
+      if(!!user?.avatar){
+        const image = await getUserAvatar(user!.avatar);
+        setAvatar(image)
+      }
+    };
+    getImage();
+  }, [user]);
+
   return (
     <div className={'profile'}>
       <div className={'profile__container'}>
@@ -71,27 +94,27 @@ const UserProfile: FC = () => {
           <div className={'profile__description'}>
             <div className={'upload__avatar'}>
               <label htmlFor={'file-input'}>
-                <img src={getUserAvatar(user!)} alt={'avatar'} />
+                <img src={avatar} alt={'avatar'} />
               </label>
               <input
                 id="file-input"
                 type="file"
                 accept="image/png, image/jpg, image/jpeg"
-                onChange={(e: any) => avatarOnChangeHandler(e.target.files)}
+                onChange={avatarOnChangeHandler}
               />
             </div>
             <div className={'profile__description__data'}>
               <p>Id: {user?._id}</p>
               <p>Email: {user?.email}</p>
               <p>Subscription: {subscription?.name}</p>
-              <p>Max storage: {subscription?.diskStorage}</p>
+              <p>Max storage: {convertByteToGigaByteString(subscription?.diskStorage!)} GB</p>
             </div>
           </div>
           <div className={'profile__storage'}>
             <div className={'profile__storage__data'}>
               <div className={'profile__storage__data__title'}>
                 <p>
-                  Storage: {convertByteToGigaByteString(user?.usedStorage!)} out
+                  Storage: {convertByteToGigaByteString(user?.usedStorage!).toFixed(2)} out
                   of {convertByteToGigaByteString(subscription?.diskStorage!)}{' '}
                   GB
                 </p>
