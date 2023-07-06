@@ -1,11 +1,10 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import 'src/components/Header/Header.style.scss';
 import { HeaderItem, NavLinksProps } from 'src/interfaces/componentsProps';
 import { useAuth } from 'src/hooks/useAuth';
 import { FormattedMessage } from 'react-intl';
-import { useAppSelector } from '../../hooks/redux';
-import { getUserAvatar } from '../../services/http/getUserAvatar';
+import image from '../../assets/userIcon.png';
 
 const links: Array<HeaderItem> = [
   {
@@ -48,12 +47,7 @@ const NavLinks: FC<NavLinksProps> = ({ item }) => {
 };
 
 const Header: FC = () => {
-  const [auth, setAuth] = useState<boolean>(false);
-  const { user } = useAppSelector((state) => state.userReducer);
-  const provider = useAuth();
-  useEffect(() => {
-    setAuth(provider.auth);
-  }, [provider]);
+  const { auth } = useAuth();
 
   return (
     <>
@@ -75,11 +69,7 @@ const Header: FC = () => {
                 <>
                   <div>
                     <Link to={'/user'}>
-                      <img
-                        className="avatar"
-                        src={getUserAvatar(user!)}
-                        alt="user avatar"
-                      />
+                      <img className="avatar" src={image} alt="user avatar" />
                     </Link>
                   </div>
                 </>
