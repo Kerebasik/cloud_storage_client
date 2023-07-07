@@ -1,14 +1,14 @@
 import React, { FC, useEffect, useState } from 'react';
-import { getSubscriptions } from 'src/services/http/getSubscriptions';
 import { ISubscription } from 'src/models/ISubscription';
 import SubscriptionCard from 'src/components/pages/SubscriptionCard/SubscriptionCard';
-
 import './Subscriptions.style.scss';
+import { SubscriptionHttpService } from "../../../services/subscriptionHttpService";
+
 
 const Subscriptions: FC = () => {
   const [subscriptions, setSubscriptions] = useState<ISubscription[]>([]);
   useEffect(() => {
-    getSubscriptions().then((res) => {
+    SubscriptionHttpService.getSubscriptions().then((res) => {
       res.sort((a, b) => (a.priceInCents > b.priceInCents ? 1 : -1));
       setSubscriptions(res);
     });

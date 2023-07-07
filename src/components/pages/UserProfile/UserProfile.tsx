@@ -8,12 +8,11 @@ import { useAuth } from 'src/hooks/useAuth';
 import { userSlice } from 'src/store/reducers/userSlice';
 import { ISubscription } from 'src/models/ISubscription';
 import { convertByteToGigaByteString } from '../SubscriptionCard/SubscriptionCard';
-import { userLogOut } from 'src/services/http/userLogOut';
-import { setUserAvatar } from 'src/services/http/setUserAvatar';
 import { IUser } from 'src/models/IUser';
 import defaultimage from 'src/assets/userIcon.png';
-import { getUserAvatar } from '../../../services/http/getUserAvatar';
 import { toast } from "react-toastify";
+import { UserHttpService } from "../../../services/userHttpService";
+import { AuthHttpService } from "../../../services/authHttpService";
 
 export const convertUsedSpace = (
   usedStorage: number,
@@ -40,7 +39,7 @@ const UserProfile: FC = () => {
     return navigate(`/user/storage/${user?._id}`);
   };
   const onClickLogOutHandler = async () => {
-    userLogOut().then(() => {
+    AuthHttpService.logout().then(() => {
       logout();
       dispatch(deleteUser());
       navigate('/');
@@ -50,7 +49,7 @@ const UserProfile: FC = () => {
   const avatarOnChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
     if (fileList!.length > 0) {
-      setUserAvatar(fileList![0])
+      UserHttpService.setUserAvatar(fileList![0])
         .then((response) => {
           setUser(response.data);
         })
@@ -75,7 +74,7 @@ const UserProfile: FC = () => {
   useEffect(() => {
     const getImage = async () => {
       if(!!user?.avatar){
-        const image = await getUserAvatar(user!.avatar);
+        const image = await UserHttpService.getUserAvatar(user!.avatar);
         setAvatar(image)
       }
     };

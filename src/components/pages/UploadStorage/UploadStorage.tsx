@@ -1,12 +1,11 @@
 import { ChangeEvent, useState } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import createNewDir from '../../../services/http/createNewDir';
 import { toast } from 'react-toastify';
 import './UploadStorage.style.scss';
 import DropzoneComponent from "../../Dropzone/Dropzone";
-import { uploadFilesSequentially } from "../../../services/http/uploadFiles";
 import { LocationState } from "../../../interfaces/states";
+import { FileHttpService } from "../../../services/fileHttpService";
 
 interface RadioButton {
   name: string;
@@ -44,7 +43,7 @@ const UploadStorage = () => {
     setRadio(event.target.value);
 
   const handleOnSubmit: SubmitHandler<FormProps> = () => {
-    createNewDir(name, location.state.id)
+    FileHttpService.createNewDir(name, location.state.id)
       .catch((error) => {
         toast.error(error.response.data.message);
       }).finally(()=>{
@@ -53,7 +52,7 @@ const UploadStorage = () => {
   };
 
   const handleUploadFiles =()=>{
-    uploadFilesSequentially(files, location.state.id).then(()=>{
+    FileHttpService.uploadFilesSequentially(files, location.state.id).then(()=>{
       navigate(-1)
     }).catch((error)=>{
       toast.error(error.response.data.message);

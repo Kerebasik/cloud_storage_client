@@ -1,11 +1,11 @@
 import { FC, useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { getUserAllStorage } from 'src/services/http/getUserAllStorage';
 import { IFile } from 'src/models/IFile';
 import { useAppSelector } from 'src/hooks/redux';
 import { useNavigate } from 'react-router-dom';
 import './Storage.style.scss';
 import { AxiosResponse } from 'axios';
+import { UserHttpService } from "../../../services/userHttpService";
 
 interface MenuLinkStorageProps {
   item: IFile;
@@ -37,7 +37,7 @@ const Storage: FC = () => {
   const navigator = useNavigate();
 
   useEffect(() => {
-    getUserAllStorage().then((res: AxiosResponse<IFile[]>) => {
+    UserHttpService.getUsersAllStorage().then((res: AxiosResponse<IFile[]>) => {
       setUserStorages(res.data);
     });
   }, [user?.files]);

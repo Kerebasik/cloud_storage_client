@@ -1,31 +1,32 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IFormSignUpInput } from 'src/interfaces/componentsProps';
 import { FormattedMessage } from 'react-intl';
-import { userSignUp } from 'src/services/http/userSignUp';
 import { useAuth } from 'src/hooks/useAuth';
 import 'src/components/pages/SignUp/SignUp.style.scss';
 import { useAppDispatch } from "../../../hooks/redux";
 import { fetchUser } from "../../../store/reducers/actionCreator";
 import { toast } from "react-toastify";
+import { AuthHttpService } from "../../../services/authHttpService";
 
 const SignUp: FC = () => {
-  const [email, setEmail] = useState<string>('');
   const dispatch = useAppDispatch();
-  const [password, setPassword] = useState<string>('');
   const navigate = useNavigate();
   const auth = useAuth();
   const location = useLocation()
   const {
     register,
     reset,
+    watch,
     formState: { errors },
     handleSubmit
   } = useForm<IFormSignUpInput>();
+  const email=watch('email')
+  const password=watch('password')
 
   const handlerOnSubmit: SubmitHandler<IFormSignUpInput> = () => {
-    userSignUp({ email, password })
+    AuthHttpService.signup({ email, password })
       .then(() => {
         dispatch(fetchUser());
         auth.login();
@@ -38,13 +39,6 @@ const SignUp: FC = () => {
     });
   };
 
-  const handlerOnChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const handlerOnChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
 
   return (
     <>
@@ -85,7 +79,6 @@ const SignUp: FC = () => {
                   },
                 })}
                 placeholder="email"
-                onChange={handlerOnChangeEmail}
               />
             </div>
             <div className="input__password">
@@ -136,7 +129,6 @@ const SignUp: FC = () => {
                     message: 'passwordNotValid',
                   },
                 })}
-                onChange={handlerOnChangePassword}
                 placeholder="password"
               />
             </div>

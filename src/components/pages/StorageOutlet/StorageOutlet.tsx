@@ -1,6 +1,5 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { getUserItemStorage } from 'src/services/http/getUserItemStorage';
 import { IFile } from 'src/models/IFile';
 import { AxiosResponse } from 'axios';
 import EmptyFolder from 'src/assets/emptyFolderV2.png';
@@ -10,13 +9,16 @@ import fileIcon from 'src/assets/fileIcon.png';
 import './StorageOutlet.style.scss';
 import { dateParser } from '../../../services/timeParser';
 import dayjs from 'dayjs';
-import getSearchFile from '../../../services/http/getSearchFile';
 import { LocationState } from "../../../interfaces/states";
 import { toast } from "react-toastify";
+import { UserHttpService } from "../../../services/userHttpService";
+import { FileHttpService } from "../../../services/fileHttpService";
 
 interface ItemProps {
   item: IFile;
+  onChangeStorage:Function
 }
+
 
 interface Option {
   value: string;
@@ -30,20 +32,32 @@ const sortSelectButtons: Option[] = [
   { value: 'date', label: 'Date' },
 ];
 
-const ItemInStorage: FC<ItemProps> = ({ item }) => {
+const ItemInStorage: FC<ItemProps> = ({ item ,onChangeStorage}) => {
   const navigator = useNavigate();
 
   const handleNavigate = () => {
     navigator(`/user/storage/${item._id}`, { state: {id:item._id, name:item.name} });
   };
 
+  const handleDownloadButtonClick =()=>{
+    FileHttpService.downloadFile(item).catch((error)=>{
+      toast.error(error.response.data.message)
+    })
+  }
+
+  const handleDeleteButtonClick = ()=>{
+    FileHttpService.deleteItem(item).then(()=>{
+      onChangeStorage(item._id)
+    })
+  }
+
   return (
-    <div className={'storageOutlet__item'} onClick={handleNavigate}>
+    <div className={'storageOutlet__item'}>
       <img src={item.type === 'dir' ? derIcon : fileIcon} alt={'icon'} />
-      <p>{item.name}</p>
-      <div>
-        <button>Download</button>
-        <button>Delete</button>
+      <p onClick={handleNavigate}>{item.name}</p>
+      <div className={'storageOutlet__item__buttons'}>
+        { item.type!=='dir' && <button onClick={handleDownloadButtonClick}>Download</button>}
+        <button onClick={handleDeleteButtonClick}>Delete</button>
       </div>
       <p>{dateParser(item.date)}</p>
     </div>
@@ -58,9 +72,14 @@ const StorageOutlet: FC = () => {
   const [searchText, setSearchText] = useState<string>('');
   const location = useLocation() as LocationState;
 
+  const removeItemById = (propertyValue:string) => {
+    setStorage(storage?.filter((item:IFile) => item._id !== propertyValue))
+  };
+
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      getSearchFile(searchText, location.state.id).then(
+      FileHttpService.searchFile(searchText, location.state.id).then(
         (res: AxiosResponse<IFile[]>) => {
           setStorage(res.data);
         },
@@ -71,7 +90,7 @@ const StorageOutlet: FC = () => {
   }, [searchText, location]);
 
   useEffect(() => {
-    getUserItemStorage(`${storageId}`, `${selectedOption}`)
+    UserHttpService.getUserItemStorage(`${storageId}`, `${selectedOption}`)
       .then((res: AxiosResponse<IFile[]>) => {
         setStorage(res.data);
       })
@@ -136,7 +155,7 @@ const StorageOutlet: FC = () => {
         </div>
       ) : (
         storage?.map((item) => {
-          return <ItemInStorage key={item._id} item={item} />;
+          return <ItemInStorage onChangeStorage={removeItemById} key={item._id} item={item} />;
         })
       )}
     </div>

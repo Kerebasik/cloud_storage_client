@@ -3,10 +3,10 @@ import { ISubscription } from 'src/models/ISubscription';
 import { useAppSelector } from 'src/hooks/redux';
 import { IUser } from 'src/models/IUser';
 import './SubscriptionCard.style.scss';
-import upgradeSubscription from "../../../services/http/upgradeSubscription";
 import { useAuth } from "../../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { UserHttpService } from "../../../services/userHttpService";
 interface CardProps {
   item: ISubscription;
 }
@@ -35,7 +35,7 @@ const SubscriptionCard: FC<CardProps> = ({ item }) => {
 
   const handlerOnClickButton = (item:ISubscription) => {
    if(auth){
-     return  upgradeSubscription(item).then((res)=>{
+     return  UserHttpService.upgradeSubscription(item).then((res)=>{
        window.location.href = res.data
      }).catch((error)=>{
        toast.error(error.response.data.message);

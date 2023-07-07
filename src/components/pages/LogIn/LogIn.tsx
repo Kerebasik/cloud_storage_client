@@ -6,11 +6,11 @@ import { IFormLogInInput } from 'src/interfaces/componentsProps';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { useAuth } from 'src/hooks/useAuth';
-import { userLogIn } from 'src/services/http/userLogIn';
 import { useAppDispatch } from '../../../hooks/redux';
 import { fetchUser } from '../../../store/reducers/actionCreator';
 import { toast } from 'react-toastify';
 import { LocationState } from "../../../interfaces/states";
+import { AuthHttpService } from "../../../services/authHttpService";
 
 
 
@@ -29,7 +29,7 @@ const LogIn: FC = () => {
   } = useForm<IFormLogInInput>();
 
   const handlerOnSubmit: SubmitHandler<IFormLogInInput> = async () => {
-    userLogIn({ email, password })
+    AuthHttpService.login({ email, password })
       .then(() => {
         dispatch(fetchUser());
         auth.login();
