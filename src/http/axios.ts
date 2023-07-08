@@ -5,7 +5,7 @@ import {
   getLocalStorageItem,
   setAccessToken,
 } from '../services/localStorageService';
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
 const baseApi = process.env.REACT_APP_API_URL;
 const prefixApi = process.env.REACT_APP_PREFIX;
@@ -63,7 +63,7 @@ axiosApiInstance.interceptors.response.use(
           deleteAccessToken();
         }
         return axiosApiInstance.request(originalRequest);
-      } catch (error:any) {
+      } catch (error: any) {
         toast.error(error.response.data.message);
       }
     }

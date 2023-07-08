@@ -1,11 +1,11 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import './UploadStorage.style.scss';
-import DropzoneComponent from "../../Dropzone/Dropzone";
-import { LocationState } from "../../../interfaces/states";
-import { FileHttpService } from "../../../services/fileHttpService";
+import DropzoneComponent from '../../Dropzone/Dropzone';
+import { LocationState } from '../../../interfaces/states';
+import { FileHttpService } from '../../../services/fileHttpService';
 
 interface RadioButton {
   name: string;
@@ -26,17 +26,23 @@ const radioButtonsGroup: RadioButton[] = [
   },
 ];
 
-interface FormProps{
-  name:string,
-  files: File[]
+interface FormProps {
+  name: string;
+  files: File[];
 }
 
 const UploadStorage = () => {
-  const { handleSubmit,reset, watch, control, formState:{errors} } = useForm<FormProps>({defaultValues:{name:""}});
+  const {
+    handleSubmit,
+    reset,
+    watch,
+    control,
+    formState: { errors },
+  } = useForm<FormProps>({ defaultValues: { name: '' } });
   const [radio, setRadio] = useState<string>('dir');
   const location = useLocation() as LocationState;
   const navigate = useNavigate();
-  const files = watch('files')
+  const files = watch('files');
   const name = watch('name');
 
   const handleRadioChange = (event: ChangeEvent<HTMLInputElement>) =>
@@ -46,25 +52,31 @@ const UploadStorage = () => {
     FileHttpService.createNewDir(name, location.state.id)
       .catch((error) => {
         toast.error(error.response.data.message);
-      }).finally(()=>{
+      })
+      .finally(() => {
         navigate(-1);
-    });
+      });
   };
 
-  const handleUploadFiles =()=>{
-    FileHttpService.uploadFilesSequentially(files, location.state.id).then(()=>{
-      navigate(-1)
-    }).catch((error)=>{
-      toast.error(error.response.data.message);
-    }).finally(()=>{
-      reset()
-    })
-  }
-
+  const handleUploadFiles = () => {
+    FileHttpService.uploadFilesSequentially(files, location.state.id)
+      .then(() => {
+        navigate(-1);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+      })
+      .finally(() => {
+        reset();
+      });
+  };
 
   return (
     <>
-      <form onSubmit={handleSubmit( radio==='dir' ? handleOnSubmit : handleUploadFiles)}>
+      <form
+        onSubmit={handleSubmit(
+          radio === 'dir' ? handleOnSubmit : handleUploadFiles,
+        )}>
         <div className={'uploadStorage'}>
           <div className={'uploadStorage__content'}>
             <div className={'uploadStorage__title'}>
@@ -93,7 +105,7 @@ const UploadStorage = () => {
                     name={'name'}
                     rules={{
                       required: {
-                        value: radio==='dir',
+                        value: radio === 'dir',
                         message: 'Name is required',
                       },
                       maxLength: {
@@ -101,7 +113,7 @@ const UploadStorage = () => {
                         message: 'Max size for name is 20 charters',
                       },
                     }}
-                    render={({field:{value, onChange}})=>(
+                    render={({ field: { value, onChange } }) => (
                       <label>
                         Directory`s Name:
                         <input
@@ -115,33 +127,30 @@ const UploadStorage = () => {
                       </label>
                     )}
                   />
-
                 </div>
               )}
-              {radio === 'file' &&
+              {radio === 'file' && (
                 <div className={'uploadStorage__dropzone'}>
                   <Controller
                     control={control}
-                    name='files'
+                    name="files"
                     rules={{
                       required: {
-                        value: radio==='file',
+                        value: radio === 'file',
                         message: 'Files is required',
-                      }, }
-                    }
-                    render={({field:{onChange}})=>
-                      (
-                        <>
-                          <DropzoneComponent handleOnDrop={onChange} />
-                          <p className={'uploadStorage__errorAlert'}>
-                            {!!errors?.name?.message && errors.name.message}
-                          </p>
-                        </>
-                      )
-                    }
-                   />
+                      },
+                    }}
+                    render={({ field: { onChange } }) => (
+                      <>
+                        <DropzoneComponent handleOnDrop={onChange} />
+                        <p className={'uploadStorage__errorAlert'}>
+                          {!!errors?.name?.message && errors.name.message}
+                        </p>
+                      </>
+                    )}
+                  />
                 </div>
-              }
+              )}
             </div>
             <div className={'uploadStorage__submitButton'}>
               <button type={'submit'}>Create</button>

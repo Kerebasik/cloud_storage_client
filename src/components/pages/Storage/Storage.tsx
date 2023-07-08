@@ -4,8 +4,7 @@ import { IFile } from 'src/models/IFile';
 import { useAppSelector } from 'src/hooks/redux';
 import { useNavigate } from 'react-router-dom';
 import './Storage.style.scss';
-import { AxiosResponse } from 'axios';
-import { UserHttpService } from "../../../services/userHttpService";
+import { UserHttpService } from '../../../services/userHttpService';
 
 interface MenuLinkStorageProps {
   item: IFile;
@@ -37,8 +36,8 @@ const Storage: FC = () => {
   const navigator = useNavigate();
 
   useEffect(() => {
-    UserHttpService.getUsersAllStorage().then((res: AxiosResponse<IFile[]>) => {
-      setUserStorages(res.data);
+    UserHttpService.getUsersAllStorage().then((res) => {
+      setUserStorages(res);
     });
   }, [user?.files]);
 

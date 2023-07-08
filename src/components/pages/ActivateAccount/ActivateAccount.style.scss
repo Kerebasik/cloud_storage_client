@@ -1,12 +1,12 @@
-$colorForOutDir:rgb(0,0,0);
+$colorForOutDir: rgb(0, 0, 0);
 
-.activateAccount{
+.activateAccount {
   flex: 1 1 100%;
   display: flex;
-  background-color: rgb(40, 40,40);
+  background-color: rgb(40, 40, 40);
   justify-content: center;
   align-items: center;
-  &__content{
+  &__content {
     font-size: 36px;
     border: 30px solid;
     border-radius: 30px;
@@ -14,11 +14,11 @@ $colorForOutDir:rgb(0,0,0);
     justify-content: center;
     align-items: center;
     background-color: $colorForOutDir;
-    &__text{
+    &__text {
       padding: 30px;
       border-radius: 30px;
       font-weight: 700;
-      color: rgb(40, 40,40);
+      color: rgb(40, 40, 40);
       background-color: rgb(255, 142, 40);
     }
   }

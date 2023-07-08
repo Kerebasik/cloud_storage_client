@@ -1,7 +1,7 @@
 import { IUser } from 'src/models/IUser';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchUser } from './actionCreator';
-import {UserState} from "../../interfaces/states";
+import { UserState } from '../../interfaces/states';
 
 const initialState: UserState = {
   user: undefined,

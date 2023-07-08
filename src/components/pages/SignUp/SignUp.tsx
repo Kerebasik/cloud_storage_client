@@ -1,44 +1,44 @@
 import React, { FC } from 'react';
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IFormSignUpInput } from 'src/interfaces/componentsProps';
 import { FormattedMessage } from 'react-intl';
 import { useAuth } from 'src/hooks/useAuth';
 import 'src/components/pages/SignUp/SignUp.style.scss';
-import { useAppDispatch } from "../../../hooks/redux";
-import { fetchUser } from "../../../store/reducers/actionCreator";
-import { toast } from "react-toastify";
-import { AuthHttpService } from "../../../services/authHttpService";
+import { useAppDispatch } from '../../../hooks/redux';
+import { fetchUser } from '../../../store/reducers/actionCreator';
+import { toast } from 'react-toastify';
+import { AuthHttpService } from '../../../services/authHttpService';
 
 const SignUp: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const auth = useAuth();
-  const location = useLocation()
+  const location = useLocation();
   const {
     register,
     reset,
     watch,
     formState: { errors },
-    handleSubmit
+    handleSubmit,
   } = useForm<IFormSignUpInput>();
-  const email=watch('email')
-  const password=watch('password')
+  const email = watch('email');
+  const password = watch('password');
 
   const handlerOnSubmit: SubmitHandler<IFormSignUpInput> = () => {
     AuthHttpService.signup({ email, password })
       .then(() => {
         dispatch(fetchUser());
         auth.login();
-        navigate('/login',{state:location.state})
+        navigate('/login', { state: location.state });
       })
       .catch((error) => {
         toast.error(error.response.data.message);
-      }).finally(()=>{
-        reset()
-    });
+      })
+      .finally(() => {
+        reset();
+      });
   };
-
 
   return (
     <>

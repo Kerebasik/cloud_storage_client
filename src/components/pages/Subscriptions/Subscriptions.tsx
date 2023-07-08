@@ -2,8 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { ISubscription } from 'src/models/ISubscription';
 import SubscriptionCard from 'src/components/pages/SubscriptionCard/SubscriptionCard';
 import './Subscriptions.style.scss';
-import { SubscriptionHttpService } from "../../../services/subscriptionHttpService";
-
+import { SubscriptionHttpService } from '../../../services/subscriptionHttpService';
 
 const Subscriptions: FC = () => {
   const [subscriptions, setSubscriptions] = useState<ISubscription[]>([]);

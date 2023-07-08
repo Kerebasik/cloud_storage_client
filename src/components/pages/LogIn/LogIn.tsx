@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from 'react-router-dom';
 import 'src/components/pages/LogIn/LogIn.style.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IFormLogInInput } from 'src/interfaces/componentsProps';
@@ -9,10 +9,8 @@ import { useAuth } from 'src/hooks/useAuth';
 import { useAppDispatch } from '../../../hooks/redux';
 import { fetchUser } from '../../../store/reducers/actionCreator';
 import { toast } from 'react-toastify';
-import { LocationState } from "../../../interfaces/states";
-import { AuthHttpService } from "../../../services/authHttpService";
-
-
+import { LocationState } from '../../../interfaces/states';
+import { AuthHttpService } from '../../../services/authHttpService';
 
 const LogIn: FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -25,7 +23,7 @@ const LogIn: FC = () => {
     register,
     formState: { errors },
     handleSubmit,
-    reset
+    reset,
   } = useForm<IFormLogInInput>();
 
   const handlerOnSubmit: SubmitHandler<IFormLogInInput> = async () => {
@@ -34,14 +32,16 @@ const LogIn: FC = () => {
         dispatch(fetchUser());
         auth.login();
 
-        location.state?.from ? navigate(`${location.state.from}`) : navigate('/')
+        location.state?.from
+          ? navigate(`${location.state.from}`)
+          : navigate('/');
       })
       .catch((error) => {
         toast.error(error.response.data.message);
       })
-      .finally(()=>{
-        reset()
-    });
+      .finally(() => {
+        reset();
+      });
   };
 
   const handlerOnChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {

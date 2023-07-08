@@ -1,39 +1,40 @@
 import Dropzone from 'react-dropzone';
-import './Dropzone.style.scss'
-import { FC } from "react";
+import './Dropzone.style.scss';
+import { FC } from 'react';
 
 interface DropzoneComponentProps {
-  handleOnDrop: any
+  handleOnDrop: any;
 }
 
-const DropzoneComponent:FC<DropzoneComponentProps> =({handleOnDrop})=>{
-
-
-  return(
+const DropzoneComponent: FC<DropzoneComponentProps> = ({ handleOnDrop }) => {
+  return (
     <>
-    <Dropzone onDrop={handleOnDrop}>
-      {({getRootProps, getInputProps, acceptedFiles}) => (
-        <div {...getRootProps({
-          className: 'dropzone',
-          onDrop: event => {
-            event.stopPropagation();
-          }
-        })}>
+      <Dropzone onDrop={handleOnDrop}>
+        {({ getRootProps, getInputProps, acceptedFiles }) => (
           <div
-          >
-            <input {...getInputProps()} />
-            {
-              acceptedFiles.length===0 ?
+            {...getRootProps({
+              className: 'dropzone',
+              onDrop: (event) => {
+                event.stopPropagation();
+              },
+            })}>
+            <div>
+              <input {...getInputProps()} />
+              {acceptedFiles.length === 0 ? (
                 <p>Drag 'n' drop some files here, or click to select files</p>
-              :
-                <div className={'dropzone__fileList'}>{acceptedFiles.map((value)=>(<p key={value.name}>{value.name}</p>))}</div>
-            }
+              ) : (
+                <div className={'dropzone__fileList'}>
+                  {acceptedFiles.map((value) => (
+                    <p key={value.name}>{value.name}</p>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      )}
-    </Dropzone>
+        )}
+      </Dropzone>
     </>
-  )
-}
+  );
+};
 
-export default DropzoneComponent
+export default DropzoneComponent;

@@ -1,7 +1,7 @@
 import axiosApiInstance from '../../http/axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ISubscription } from '../../models/ISubscription';
-import { UserHttpService } from "../../services/userHttpService";
+import { UserHttpService } from '../../services/userHttpService';
 
 export const fetchUser = createAsyncThunk('user/fetch', async (_, thunkAPI) => {
   try {

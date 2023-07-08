@@ -13,8 +13,8 @@ import UserPage from '../pages/UserPage';
 import StoragePage from '../pages/StoragePage';
 import CreateStoragePage from '../pages/CreateStoragePage';
 import UploadStoragePage from '../pages/UploadStoragePage';
-import StorageOutletPage from "../pages/StorageOutletPage";
-import ActivateAccountPage from "../pages/ActivateAccountPage";
+import StorageOutletPage from '../pages/StorageOutletPage';
+import ActivateAccountPage from '../pages/ActivateAccountPage';
 
 const AppRoutes = () => {
   return (
@@ -69,7 +69,7 @@ const AppRoutes = () => {
 
           <Route path="/login" element={<LogInPage />} />
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/activated/*" element={<ActivateAccountPage/>} />
+          <Route path="/activated/*" element={<ActivateAccountPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </AuthProvider>

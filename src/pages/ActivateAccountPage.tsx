@@ -1,15 +1,17 @@
-import React, {Suspense} from "react";
-import Preloader from "../components/Preloader/Preloader";
-const ActivateAccount = React.lazy(()=>import('src/components/pages/ActivateAccount/ActivateAccount'))
+import React, { Suspense } from 'react';
+import Preloader from '../components/Preloader/Preloader';
+const ActivateAccount = React.lazy(
+  () => import('src/components/pages/ActivateAccount/ActivateAccount'),
+);
 
-const ActivateAccountPage = ()=>{
-  return(
+const ActivateAccountPage = () => {
+  return (
     <>
-      <Suspense fallback={<Preloader/>}>
+      <Suspense fallback={<Preloader />}>
         <ActivateAccount />
       </Suspense>
     </>
-  )
-}
+  );
+};
 
-export default ActivateAccountPage
+export default ActivateAccountPage;

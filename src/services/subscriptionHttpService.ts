@@ -1,9 +1,9 @@
-import axiosApiInstance from "../http/axios";
-import {AxiosResponse} from "axios";
-import { ISubscription } from "../models/ISubscription";
+import axiosApiInstance from '../http/axios';
+import { AxiosResponse } from 'axios';
+import { ISubscription } from '../models/ISubscription';
 
 class SubscriptionHttpService {
-  static getSubscriptions(){
+  static getSubscriptions() {
     return axiosApiInstance
       .get('/subscriptions/find')
       .then((result: AxiosResponse<ISubscription[]>) => {
@@ -12,4 +12,4 @@ class SubscriptionHttpService {
   }
 }
 
-export {SubscriptionHttpService}
+export { SubscriptionHttpService };

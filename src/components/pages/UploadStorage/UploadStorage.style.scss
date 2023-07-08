@@ -31,12 +31,12 @@
     }
   }
 
-  &__directory{
-    label{
+  &__directory {
+    label {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      input{
+      input {
         font-size: 18px;
         border: 1px solid;
         border-radius: 10px;
@@ -45,11 +45,11 @@
     }
   }
 
-  &__dropzone{
-    border:3px dashed rgba(255, 182, 40);
+  &__dropzone {
+    border: 3px dashed rgba(255, 182, 40);
   }
 
-  &__errorAlert{
+  &__errorAlert {
     color: red;
   }
 
@@ -67,7 +67,7 @@
       width: 100%;
       font-weight: 700;
       background: none;
-      font-size:18px;
+      font-size: 18px;
     }
   }
 }

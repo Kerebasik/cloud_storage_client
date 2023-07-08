@@ -2,6 +2,23 @@
   display: flex;
   gap: 10px;
   flex-direction: column;
+
+  &__button {
+    margin: 0 5px;
+  }
+
+  &__name {
+    margin: 0 5px;
+  }
+
+  &__search {
+    margin: 0 5px;
+  }
+
+  &__sort {
+    margin: 0 5px;
+  }
+
   &__empty {
     img {
       max-width: 100%;
@@ -28,20 +45,29 @@
     }
   }
   &__item {
-    &:hover{
-      .storageOutlet{
-        &__item{
-          &__buttons{
+    &__title {
+      width: 100%;
+      text-align: center;
+    }
+
+    &__date {
+      margin: 0 10px;
+    }
+
+    &:hover {
+      .storageOutlet {
+        &__item {
+          &__buttons {
             display: flex;
             flex-direction: row;
             gap: 15px;
 
-            button{
-              border: 1px solid rgb(40,40,40);
+            button {
+              border: 1px solid rgb(40, 40, 40);
               padding: 5px;
               border-radius: 5px;
               font-weight: 700;
-              background-color: rgb(255,182,40);
+              background-color: rgb(255, 182, 40);
             }
           }
         }
@@ -56,28 +82,55 @@
     img {
       height: 20px;
     }
-    &__buttons{
+    &__buttons {
       display: none;
     }
   }
 }
 
-@media (hover:none) {
-  .storageOutlet{
-    &__item{
-      &__buttons{
+@media (hover: none) {
+  .storageOutlet {
+    &__item {
+      &__buttons {
         display: flex;
         flex-direction: row;
         gap: 15px;
 
-        button{
-          border: 1px solid rgb(40,40,40);
+        button {
+          border: 1px solid rgb(40, 40, 40);
           padding: 5px;
           border-radius: 5px;
           font-weight: 700;
-          background-color: rgb(255,182,40);
+          background-color: rgb(255, 182, 40);
         }
       }
+    }
+  }
+}
+
+@media (max-width: 475px) {
+  .storageOutlet {
+    &__item {
+      font-size: 16px;
+    }
+
+    &__panel {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    &__name {
+      font-size: 16px;
+    }
+    &__search {
+      font-size: 16px;
+      input {
+        max-width: 70px;
+      }
+    }
+
+    &__sort {
+      font-size: 16px;
     }
   }
 }

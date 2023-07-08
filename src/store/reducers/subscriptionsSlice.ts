@@ -1,8 +1,7 @@
 import { ISubscription } from '../../models/ISubscription';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchSubscriptions } from './actionCreator';
-import {SubscriptionsState} from "../../interfaces/states";
-
+import { SubscriptionsState } from '../../interfaces/states';
 
 const initialState: SubscriptionsState = {
   subscriptions: undefined,

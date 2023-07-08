@@ -10,9 +10,9 @@ import { ISubscription } from 'src/models/ISubscription';
 import { convertByteToGigaByteString } from '../SubscriptionCard/SubscriptionCard';
 import { IUser } from 'src/models/IUser';
 import defaultimage from 'src/assets/userIcon.png';
-import { toast } from "react-toastify";
-import { UserHttpService } from "../../../services/userHttpService";
-import { AuthHttpService } from "../../../services/authHttpService";
+import { toast } from 'react-toastify';
+import { UserHttpService } from '../../../services/userHttpService';
+import { AuthHttpService } from '../../../services/authHttpService';
 
 export const convertUsedSpace = (
   usedStorage: number,
@@ -51,7 +51,7 @@ const UserProfile: FC = () => {
     if (fileList!.length > 0) {
       UserHttpService.setUserAvatar(fileList![0])
         .then((response) => {
-          setUser(response.data);
+          setUser(response);
         })
         .catch((error) => {
           setUser(user);
@@ -73,9 +73,9 @@ const UserProfile: FC = () => {
 
   useEffect(() => {
     const getImage = async () => {
-      if(!!user?.avatar){
+      if (!!user?.avatar) {
         const image = await UserHttpService.getUserAvatar(user!.avatar);
-        setAvatar(image)
+        setAvatar(image);
       }
     };
     getImage();
@@ -106,16 +106,20 @@ const UserProfile: FC = () => {
               <p>Id: {user?._id}</p>
               <p>Email: {user?.email}</p>
               <p>Subscription: {subscription?.name}</p>
-              <p>Max storage: {convertByteToGigaByteString(subscription?.diskStorage!)} GB</p>
+              <p>
+                Max storage:{' '}
+                {convertByteToGigaByteString(subscription?.diskStorage!)} GB
+              </p>
             </div>
           </div>
           <div className={'profile__storage'}>
             <div className={'profile__storage__data'}>
               <div className={'profile__storage__data__title'}>
                 <p>
-                  Storage: {convertByteToGigaByteString(user?.usedStorage!).toFixed(2)} out
-                  of {convertByteToGigaByteString(subscription?.diskStorage!)}{' '}
-                  GB
+                  Storage:{' '}
+                  {convertByteToGigaByteString(user?.usedStorage!).toFixed(2)}{' '}
+                  out of{' '}
+                  {convertByteToGigaByteString(subscription?.diskStorage!)} GB
                 </p>
                 <button onClick={upgradeSubscriptionForUserHandler}>
                   Upgrade
