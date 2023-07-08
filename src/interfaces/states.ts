@@ -7,6 +7,7 @@ export interface LocationState extends Location {
     id: string;
     name: string;
     from: string;
+    type: string;
   };
 }
 
