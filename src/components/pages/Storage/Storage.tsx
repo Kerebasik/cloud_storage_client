@@ -16,14 +16,12 @@ const MenuLinkStorage: FC<MenuLinkStorageProps> = ({ item, link }) => {
     window.scroll(0, 0);
   };
 
-  const stateToLink = {
-    id: item._id,
-    name: item.name,
-  };
-
   return (
     <div className={'menu__link'}>
-      <NavLink onClick={LinkOnClickHandler} to={`${link}`} state={stateToLink}>
+      <NavLink
+        onClick={LinkOnClickHandler}
+        to={`${link}`}
+        state={{ id: item._id, name: item.name, type: item.type }}>
         {item.name}
       </NavLink>
     </div>

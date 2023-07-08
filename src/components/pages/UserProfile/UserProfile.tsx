@@ -108,7 +108,10 @@ const UserProfile: FC = () => {
               <p>Subscription: {subscription?.name}</p>
               <p>
                 Max storage:{' '}
-                {convertByteToGigaByteString(subscription?.diskStorage!)} GB
+                {subscription?.diskStorage
+                  ? convertByteToGigaByteString(subscription?.diskStorage)
+                  : 0}{' '}
+                GB
               </p>
             </div>
           </div>
@@ -117,9 +120,14 @@ const UserProfile: FC = () => {
               <div className={'profile__storage__data__title'}>
                 <p>
                   Storage:{' '}
-                  {convertByteToGigaByteString(user?.usedStorage!).toFixed(2)}{' '}
+                  {user?.usedStorage
+                    ? convertByteToGigaByteString(user?.usedStorage!).toFixed(2)
+                    : 0}{' '}
                   out of{' '}
-                  {convertByteToGigaByteString(subscription?.diskStorage!)} GB
+                  {subscription?.diskStorage
+                    ? convertByteToGigaByteString(subscription?.diskStorage!)
+                    : 0}{' '}
+                  GB
                 </p>
                 <button onClick={upgradeSubscriptionForUserHandler}>
                   Upgrade
@@ -130,10 +138,14 @@ const UserProfile: FC = () => {
                 bgColor={'#FFB628'}
                 baseBgColor={'#282828'}
                 labelColor={'#00000'}
-                completed={convertUsedSpace(
-                  user?.usedStorage!,
-                  subscription?.diskStorage!,
-                )}
+                completed={
+                  subscription?.diskStorage
+                    ? convertUsedSpace(
+                        user?.usedStorage!,
+                        subscription?.diskStorage!,
+                      )
+                    : 0
+                }
                 maxCompleted={100}
               />
             </div>

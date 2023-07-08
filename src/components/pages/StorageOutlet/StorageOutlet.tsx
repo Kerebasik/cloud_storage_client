@@ -35,7 +35,7 @@ const ItemInStorage: FC<ItemProps> = ({ item, onChangeStorage }) => {
 
   const handleNavigate = () => {
     navigator(`/user/storage/${item._id}`, {
-      state: { id: item._id, name: item.name },
+      state: { id: item._id, name: item.name, type: item.type },
     });
   };
 
@@ -72,6 +72,7 @@ const StorageOutlet: FC = () => {
   const { storageId } = useParams();
   const [storage, setStorage] = useState<IFile[]>();
   const navigate = useNavigate();
+  const [image, setImage] = useState(fileIcon);
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [searchText, setSearchText] = useState<string>('');
   const location = useLocation() as LocationState;
@@ -91,18 +92,25 @@ const StorageOutlet: FC = () => {
   }, [searchText, location]);
 
   useEffect(() => {
-    UserHttpService.getUserItemStorage(`${storageId}`, `${selectedOption}`)
-      .then((res) => {
-        setStorage(res);
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
-        navigate('/user/storage');
+    if (location.state?.type !== 'dir') {
+      FileHttpService.getUserFile(location.state?.id).then((blob) => {
+        setImage(blob);
       });
+    } else {
+      UserHttpService.getUserItemStorage(`${storageId}`, `${selectedOption}`)
+        .then((res) => {
+          setStorage(res);
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+          navigate('/user/storage');
+        });
+    }
+
     return () => {
       setStorage(undefined);
     };
-  }, [storageId, selectedOption, navigate]);
+  }, [storageId, selectedOption, navigate, location]);
 
   useEffect(() => {
     if (location.state === null) {
@@ -157,7 +165,11 @@ const StorageOutlet: FC = () => {
           Create
         </button>
       </div>
-      {storage?.length === 0 ? (
+      {location.state?.type !== 'dir' ? (
+        <div className={'storageOutlet__image'}>
+          <img src={image} alt={'file'} />
+        </div>
+      ) : storage?.length === 0 ? (
         <div className={'storageOutlet__empty'}>
           {' '}
           <img src={EmptyFolder} alt={'Icon empty folder'} />{' '}

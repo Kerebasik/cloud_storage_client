@@ -56,6 +56,18 @@ class FileHttpService {
       }
     }
   }
+
+  static async getUserFile(id: string) {
+    try {
+      const response = await axiosApiInstance(`/files/download?id=${id}`, {
+        responseType: 'blob',
+      });
+      const downloadURL = window.URL.createObjectURL(new Blob([response.data]));
+      return downloadURL;
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }
 
 export { FileHttpService };
